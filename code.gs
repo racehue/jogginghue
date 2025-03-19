@@ -29,7 +29,7 @@ function doPost(e) {
     }
 
     // Save data to Google Sheets (acting as a database)
-    const sheet = SpreadsheetApp.openById("YOUR_SPREADSHEET_ID").getSheetByName("Users");
+    const sheet = SpreadsheetApp.openById("132JA2nZ1rwwuUBcAMVce7YcsrDZSW2sVrWICKkm5WEI").getSheetByName("Users");
     sheet.appendRow([name, email, password]); // Note: Hash passwords in production
 
     // Return success response
