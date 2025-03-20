@@ -13,8 +13,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        /* CSS đã được giữ nguyên như trong file gốc */
+    <link rel="stylesheet" href="css/styles.css">
+            /* CSS đã được giữ nguyên như trong file gốc */
         body {
             font-family: 'Roboto', sans-serif;
             background-color: #f0f4f8;
@@ -351,8 +351,8 @@
         </div>
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        function updateTotal() {
+    <script src="js/script.js"></script>
+            function updateTotal() {
             const culySelect = document.getElementById("culy");
             const sizeTypeSelect = document.getElementById("sizeType");
             const totalInput = document.getElementById("total");
@@ -385,26 +385,26 @@
                 sizeSelect.add(new Option("M", "M"));
             }
         }
-        document.getElementById('registrationForm').addEventListener('submit', async function (event) {
+        document.getElementById('registrationForm').addEventListener('submit', function (event) {
             event.preventDefault();
-            // Check form validity
-            if (!this.checkValidity()) {
-                this.classList.add('was-validated');
-                return;
-            }
-            // Collect form data
+        
+            // Thu thập dữ liệu từ form
             const formData = {
                 codeId: Math.random().toString(36).substr(2, 8), // Tạo mã đơn hàng ngẫu nhiên
+                sex: document.getElementById('sex').value,
                 name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
                 tel: document.getElementById('tel').value,
                 culy: document.getElementById('culy').value,
                 sizeType: document.getElementById('sizeType').value,
                 size: document.getElementById('size').value,
-                questions: document.getElementById('questions').value,
-                total: document.getElementById('total').value.replace(/,/g, '') // Remove commas
+                total: document.getElementById('total').value.replace(/,/g, ''), // Loại bỏ dấu phẩy
             };
-            // Redirect to page2.html with query parameters
+        
+            // Tạo query parameters từ formData
             const queryParams = new URLSearchParams(formData).toString();
+        
+            // Chuyển hướng đến page2.html với query parameters
             window.location.href = `page2.html?${queryParams}`;
         });
     </script>

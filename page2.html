@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Thanh toán Giải chạy Jogging Quảng Công Biển Gọi</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-  <style>
-    /* CSS giữ nguyên như trước */
+  <link rel="stylesheet" href="css/styles.css">
+      /* CSS giữ nguyên như trước */
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background-color: #f8f9fa;
@@ -127,65 +127,63 @@
     </div>
   </div>
 
-  <script>
+  <script src="js/script.js"></script>
     // Lấy query parameters từ URL
     const params = new URLSearchParams(window.location.search);
 
-    // Hiển thị thông tin trên trang
+    // Hiển thị thông tin đăng ký
     document.getElementById('codeId').textContent = params.get('codeId') || '';
     document.getElementById('name').textContent = params.get('name') || '';
     document.getElementById('tel').textContent = params.get('tel') || '';
     document.getElementById('culy').textContent = params.get('culy') || '';
     document.getElementById('total').textContent = `${params.get('total')} VNĐ`;
 
-    // Tạo mã QR bằng SePay
+    // Tạo mã QR bằng API SePay
     function generateSepayQR() {
-      const qrContainer = document.getElementById('qr-container');
-      try {
-        // Lấy thông tin từ query parameters
-        const codeId = params.get('codeId');
-        const tel = params.get('tel');
-        const culy = params.get('culy');
-        const total = params.get('total');
+        const qrContainer = document.getElementById('qr-container');
+        try {
+            // Lấy thông tin từ query parameters
+            const codeId = params.get('codeId');
+            const tel = params.get('tel');
+            const culy = params.get('culy');
+            const total = params.get('total');
 
-        // Kiểm tra dữ liệu đầu vào
-        if (!codeId || !tel || !culy || !total) {
-          throw new Error("Thiếu thông tin cần thiết để tạo mã QR");
+            // Kiểm tra dữ liệu đầu vào
+            if (!codeId || !tel || !culy || !total) {
+                throw new Error("Thiếu thông tin cần thiết để tạo mã QR");
+            }
+
+            // Định dạng số tiền (đơn vị đồng)
+            const amountInCents = Math.round(Number(total.replace(/,/g, '')));
+
+            // Tạo nội dung chuyển khoản
+            const description = `${codeId}BG25${culy}${tel}`;
+
+            // Tạo URL SePay QR Code
+            const sepayUrl = `https://qr.sepay.vn/img?acc=0388178701&bank=MB&amount=${amountInCents}&des=${encodeURIComponent(description)}`;
+
+            // Hiển thị mã QR
+            qrContainer.innerHTML = `
+                <img src="${sepayUrl}" class="payment-qr-code" alt="QR Code">
+                <div class="payment-info">
+                    <p><strong>Ngân hàng:</strong> MB Bank</p>
+                    <p><strong>Số TK:</strong> 0388178701</p>
+                    <p><strong>Nội dung:</strong> ${description}</p>
+                </div>
+            `;
+            document.getElementById('confirmBtn').disabled = false; // Kích hoạt nút "Tôi đã thanh toán"
+        } catch (error) {
+            console.error('Lỗi khi tạo mã QR:', error.message);
+            qrContainer.innerHTML = '<div class="alert alert-danger">Không thể tạo mã QR. Vui lòng kiểm tra lại thông tin.</div>';
         }
-
-        // Định dạng số tiền (đơn vị đồng)
-        const amountInCents = Math.round(Number(total.replace(/,/g, '')));
-
-        // Tạo nội dung chuyển khoản
-        const description = `${codeId}BG25${culy}${tel}`;
-
-        // Tạo URL SePay QR Code
-        const sepayUrl = `https://qr.sepay.vn/img?acc=0388178701&bank=MB&amount=${amountInCents}&des=${encodeURIComponent(description)}`;
-
-        // Hiển thị mã QR
-        qrContainer.innerHTML = `
-          <img src="${sepayUrl}" class="payment-qr-code" alt="QR Code">
-          <div class="payment-info">
-            <p><strong>Ngân hàng:</strong> MB Bank</p>
-            <p><strong>Số TK:</strong> 0388178701</p>
-            <p><strong>Nội dung:</strong> ${description}</p>
-          </div>
-        `;
-        document.getElementById('confirmBtn').disabled = false; // Kích hoạt nút "Tôi đã thanh toán"
-      } catch (error) {
-        console.error('Lỗi khi tạo mã QR:', error.message);
-        qrContainer.innerHTML = '<div class="alert alert-danger">Không thể tạo mã QR. Vui lòng kiểm tra lại thông tin.</div>';
-      }
     }
 
     // Xử lý nút xác nhận thanh toán
     document.getElementById('confirmBtn').addEventListener('click', function () {
-      alert('Cảm ơn bạn đã thanh toán!');
-      window.location.href = 'index.html'; // Quay về trang chính
+        alert('Cảm ơn bạn đã thanh toán!');
+        window.location.href = 'index.html'; // Quay về trang chính
     });
 
     // Tự động tạo mã QR khi trang được tải
     generateSepayQR();
-  </script>
-</body>
-</html>
+</script>
