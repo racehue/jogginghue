@@ -366,46 +366,52 @@
     // Cập nhật giá trị vào ô tổng tiền
     totalInput.value = total.toLocaleString('vi-VN');
 }
-          function updateSizeOptions() {
+         function updateSizeOptions() {
     const sizeTypeSelect = document.getElementById("sizeType");
     const sizeSelect = document.getElementById("size");
 
     // Reset nội dung của dropdown size áo
     sizeSelect.innerHTML = '<option value="">-- Chọn size áo --</option>';
-    sizeSelect.disabled = true; // Mặc định vô hiệu hóa dropdown size áo
+    sizeSelect.disabled = true; // Vô hiệu hóa dropdown size áo
 
     // Kiểm tra xem kiểu áo có được chọn hay không
     if (sizeTypeSelect.value) {
         sizeSelect.disabled = false; // Kích hoạt dropdown size áo
 
         // Thêm các tùy chọn size áo dựa trên kiểu áo đã chọn
-        if (sizeTypeSelect.value === "Nam") {
-            ["S", "M", "L", "XL", "XXL"].forEach(size => {
-                sizeSelect.add(new Option(size, size));
-            });
-        } else if (sizeTypeSelect.value === "Nữ") {
-            ["XS", "S", "M", "L", "XL"].forEach(size => {
-                sizeSelect.add(new Option(size, size));
-            });
-        } else if (sizeTypeSelect.value === "Trẻ em") {
-            ["2XS", "XS", "S", "M"].forEach(size => {
-                sizeSelect.add(new Option(size, size));
-            });
-        }
+        const sizes = {
+            "Nam": ["S", "M", "L", "XL", "XXL"],
+            "Nữ": ["XS", "S", "M", "L", "XL"],
+            "Trẻ em": ["2XS", "XS", "S", "M"]
+        };
+
+        sizes[sizeTypeSelect.value].forEach(size => {
+            sizeSelect.add(new Option(size, size));
+        });
     }
 }
  
          // Cập nhật xử lý submit form để lưu dữ liệu vào Google Sheets
  document.getElementById('registrationFormElement').addEventListener('submit', function (event) {
-     event.preventDefault();
- 
-     // Form validation
-     const form = event.target;
-     if (!form.checkValidity()) {
-         event.stopPropagation();
-         form.classList.add('was-validated');
-         return;
-     }
+    event.preventDefault();
+
+    // Form validation
+    const form = event.target;
+    if (!form.checkValidity()) {
+        event.stopPropagation();
+        form.classList.add('was-validated');
+        return;
+    }
+
+    // Kiểm tra xem dropdown size đã được kích hoạt và có giá trị hợp lệ hay chưa
+    const sizeSelect = document.getElementById("size");
+    if (sizeSelect.disabled || !sizeSelect.value) {
+        alert("Vui lòng chọn size áo phù hợp.");
+        return;
+    }
+
+    // Tiếp tục xử lý gửi form...
+});
  
      // Show loading spinner
      document.getElementById('submitBtn').classList.add('d-none');
