@@ -304,6 +304,15 @@
                             </select>
                             <div class="invalid-feedback">Vui lòng chọn size áo.</div>
                         </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="size" class="form-label required-field">Size áo</label>
+                            <select id="size" name="size" class="form-select" required disabled>
+                                <option value="">-- Chọn size áo --</option>
+                            </select>
+                            <div class="invalid-feedback">Vui lòng chọn size áo.</div>
+                        </div>
                         <div class="col-md-6 mb-3">
                             <label for="total" class="form-label">Tổng tiền thanh toán</label>
                             <div class="input-group">
@@ -387,7 +396,7 @@
             }
         }
 
-        document.getElementById('Form đăng ký').addEventListener('submit', async function (event) {
+        document.getElementById('registrationForm').addEventListener('submit', async function (event) {
             event.preventDefault();
 
             // Check form validity
@@ -399,7 +408,6 @@
             // Collect form data
             const formData = {
                 sex: document.getElementById('sex').value,
-                code-id: document.getElementById('code-id').value,
                 name: document.getElementById('name').value,
                 email: document.getElementById('email').value,
                 tel: document.getElementById('tel').value,
@@ -407,6 +415,7 @@
                 sizeType: document.getElementById('sizeType').value,
                 size: document.getElementById('size').value,
                 questions: document.getElementById('questions').value,
+                total: document.getElementById('total').value.replace(/,/g, '') // Remove commas
             };
 
             // Disable submit button and show loading spinner
