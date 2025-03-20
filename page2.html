@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thanh toán Giải chạy Jogging Quảng Công Biển Gọi</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f8f9fa;
+      padding: 20px;
+    }
+    .container {
+      max-width: 600px;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      padding: 20px;
+      margin: 20px auto;
+    }
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+      border-bottom: 1px solid #dee2e6;
+      padding-bottom: 15px;
+    }
+    .info-section {
+      margin-bottom: 25px;
+    }
+    .info-item {
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 1px solid #f2f2f2;
+      padding-bottom: 10px;
+    }
+    .payment-section {
+      text-align: center;
+      margin-top: 30px;
+      padding: 20px;
+      background-color: #f8f9fa;
+      border-radius: 8px;
+    }
+    .payment-qr-code {
+      max-width: 200px;
+      margin: 20px auto;
+      display: block;
+    }
+    .payment-info {
+      margin-top: 20px;
+      padding: 15px;
+      background-color: #e9ecef;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+    .btn-success {
+      background-color: #2ecc71;
+      border-color: #27ae60;
+    }
+    .btn-success:hover {
+      background-color: #27ae60;
+      border-color: #219653;
+    }
+    .footer {
+      text-align: center;
+      margin-top: 30px;
+      font-size: 12px;
+      color: #6c757d;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h2>Thanh toán Giải chạy</h2>
+      <h4>Jogging Quảng Công Biển Gọi</h4>
+    </div>
+
+    <div class="info-section">
+      <h5>Thông tin đăng ký</h5>
+      
+      <div class="info-item">
+        <span>Mã đơn hàng:</span>
+        <span id="codeId"></span>
+      </div>
+      
+      <div class="info-item">
+        <span>Họ và tên:</span>
+        <span id="name"></span>
+      </div>
+      
+      <div class="info-item">
+        <span>Số điện thoại:</span>
+        <span id="tel"></span>
+      </div>
+      
+      <div class="info-item">
+        <span>Cự ly đăng ký:</span>
+        <span id="culy"></span>
+      </div>
+      
+      <div class="info-item">
+        <span>Số tiền:</span>
+        <span id="total"></span>
+      </div>
+    </div>
+
+    <div class="payment-section">
+      <h5>Quét mã QR để thanh toán</h5>
+      <div id="qr-container">
+        <img src="https://via.placeholder.com/200" class="payment-qr-code" alt="QR Code">
+        <div class="payment-info">
+          <p><strong>Ngân hàng:</strong> MB Bank</p>
+          <p><strong>Số TK:</strong> 0388178701</p>
+          <p><strong>Nội dung:</strong> <span id="content"></span></p>
+        </div>
+      </div>
+      
+      <button id="confirmBtn" onclick="redirectToConfirmation()" class="btn btn-success mt-3">
+        Tôi đã thanh toán
+      </button>
+    </div>
+
+    <div class="footer">
+      <p>© 2025 Giải chạy Jogging Quảng Công Biển Gọi</p>
+      <p>Mọi thắc mắc xin liên hệ: <a href="mailto:support@jog-bg25.com">support@jog-bg25.com</a></p>
+    </div>
+  </div>
+
+  <script>
+    // Lấy query parameters từ URL
+    const params = new URLSearchParams(window.location.search);
+
+    // Hiển thị thông tin trên trang
+    document.getElementById('codeId').textContent = params.get('codeId') || '';
+    document.getElementById('name').textContent = params.get('name') || '';
+    document.getElementById('tel').textContent = params.get('tel') || '';
+    document.getElementById('culy').textContent = params.get('culy') || '';
+    document.getElementById('total').textContent = `${params.get('total')} VNĐ`;
+    document.getElementById('content').textContent = `${params.get('codeId')}BG25${params.get('culy')}${params.get('tel')}`;
+
+    // Xử lý nút xác nhận thanh toán
+    function redirectToConfirmation() {
+      alert('Cảm ơn bạn đã thanh toán!');
+      window.location.href = 'index.html';
+    }
+  </script>
+</body>
+</html>
