@@ -440,6 +440,14 @@
             const paddedNumber = randomNumber.toString().padStart(4, '0');
             return 'QC' + paddedNumber;
         }
+        // Tạo query parameters từ formData để chuyển sang trang xác nhận
+const queryParams = new URLSearchParams();
+for (const key in formData) {
+    queryParams.append(key, formData[key]);
+}
+
+// Chuyển hướng đến page2.html với query parameters
+window.location.href = `page2.html?${queryParams.toString()}`;
     </script>
 </body>
 </html>
