@@ -440,11 +440,11 @@ document.getElementById('registrationFormElement').addEventListener('submit', fu
     
     fetch(scriptURL, {
         method: 'POST',
-        mode: 'no-cors', // Cần thiết để tránh lỗi CORS
         body: formDataToSend
+        })
     })
     .then(() => {
-        console.log('Đã gửi dữ liệu thành công!');
+        console.log('Dữ liệu gửi đi:', Object.fromEntries(formDataToSend));
         
         // Tạo query parameters từ formData để chuyển sang trang xác nhận
         const queryParams = new URLSearchParams();
