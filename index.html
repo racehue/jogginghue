@@ -283,26 +283,17 @@
                                 <option value="10km" data-price="120000">10km - 120.000đ</option>
                             </select>
                             <div class="invalid-feedback">Vui lòng chọn cự ly.</div>
-                       <div class="row">
-    <div class="col-md-6 mb-3">
-        <label for="sizeType" class="form-label required-field">Kiểu áo</label>
-        <select id="sizeType" name="sizeType" class="form-select" required onchange="updateSizeOptions(); updateTotal()">
-            <option value="">-- Chọn kiểu áo --</option>
-            <option value="Nam" data-price="100000">Áo Nam - 100.000đ</option>
-            <option value="Nữ" data-price="100000">Áo Nữ - 100.000đ</option>
-            <option value="Trẻ em" data-price="80000">Áo Trẻ em - 80.000đ</option>
-        </select>
-        <div class="invalid-feedback">Vui lòng chọn kiểu áo.</div>
-    </div>
-    <div class="col-md-6 mb-3">
-        <label for="size" class="form-label required-field">Size áo</label>
-        <select id="size" name="size" class="form-select" required disabled>
-            <option value="">-- Chọn size áo --</option>
-        </select>
-        <div class="invalid-feedback">Vui lòng chọn size áo.</div>
-    </div>
-</div>
-                        <div class="row">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="sizeType" class="form-label required-field">Kiểu áo</label>
+                            <select id="sizeType" name="sizeType" class="form-select" required onchange="updateSizeOptions(); updateTotal()">
+                                <option value="">-- Chọn kiểu áo --</option>
+                                <option value="Nam" data-price="100000">Áo Nam - 100.000đ</option>
+                                <option value="Nữ" data-price="100000">Áo Nữ - 100.000đ</option>
+                                <option value="Trẻ em" data-price="80000">Áo Trẻ em - 80.000đ</option>
+                            </select>
+                            <div class="invalid-feedback">Vui lòng chọn kiểu áo.</div>
+                        </div>
                         <div class="col-md-6 mb-3">
                             <label for="size" class="form-label required-field">Size áo</label>
                             <select id="size" name="size" class="form-select" required disabled>
@@ -358,127 +349,120 @@
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-     function updateTotal() {
-    const culySelect = document.getElementById("culy");
-    const sizeTypeSelect = document.getElementById("sizeType");
-    const totalInput = document.getElementById("total");
+        // Hàm cập nhật tổng tiền
+        function updateTotal() {
+            const culySelect = document.getElementById("culy");
+            const sizeTypeSelect = document.getElementById("sizeType");
+            const totalInput = document.getElementById("total");
 
-    // Lấy giá trị từ dropdown cự ly và kiểu áo
-    const culyPrice = culySelect.value ? parseInt(culySelect.options[culySelect.selectedIndex].getAttribute("data-price")) : 0;
-    const sizeTypePrice = sizeTypeSelect.value ? parseInt(sizeTypeSelect.options[sizeTypeSelect.selectedIndex].getAttribute("data-price")) : 0;
+            // Lấy giá trị từ dropdown cự ly và kiểu áo
+            const culyPrice = culySelect.value ? parseInt(culySelect.options[culySelect.selectedIndex].getAttribute("data-price")) : 0;
+            const sizeTypePrice = sizeTypeSelect.value ? parseInt(sizeTypeSelect.options[sizeTypeSelect.selectedIndex].getAttribute("data-price")) : 0;
 
-    // Tính tổng tiền
-    const total = culyPrice + sizeTypePrice;
+            // Tính tổng tiền
+            const total = culyPrice + sizeTypePrice;
 
-    // Cập nhật giá trị vào ô tổng tiền
-    totalInput.value = total.toLocaleString('vi-VN');
-}
-        
-       function updateSizeOptions() {
-    const sizeTypeSelect = document.getElementById("sizeType");
-    const sizeSelect = document.getElementById("size");
-
-    // Reset nội dung của dropdown size áo
-    sizeSelect.innerHTML = '<option value="">-- Chọn size áo --</option>';
-    sizeSelect.disabled = true; // Mặc định vô hiệu hóa dropdown size áo
-
-    // Kiểm tra xem kiểu áo có được chọn hay không
-    if (sizeTypeSelect.value) {
-        sizeSelect.disabled = false; // Kích hoạt dropdown size áo
-
-        // Thêm các tùy chọn size áo dựa trên kiểu áo đã chọn
-        if (sizeTypeSelect.value === "Nam") {
-            ["S", "M", "L", "XL", "XXL"].forEach(size => {
-                sizeSelect.add(new Option(size, size));
-            });
-        } else if (sizeTypeSelect.value === "Nữ") {
-            ["XS", "S", "M", "L", "XL"].forEach(size => {
-                sizeSelect.add(new Option(size, size));
-            });
-        } else if (sizeTypeSelect.value === "Trẻ em") {
-            ["2XS", "XS", "S", "M"].forEach(size => {
-                sizeSelect.add(new Option(size, size));
-            });
+            // Cập nhật giá trị vào ô tổng tiền
+            totalInput.value = total.toLocaleString('vi-VN');
         }
-    }
-}
-        
-        // Cập nhật xử lý submit form để lưu dữ liệu vào Google Sheets
-document.getElementById('registrationFormElement').addEventListener('submit', function (event) {
-    event.preventDefault();
-    
-    // Form validation
-    const form = event.target;
-    if (!form.checkValidity()) {
-        event.stopPropagation();
-        form.classList.add('was-validated');
-        return;
-    }
-    
-    // Show loading spinner
-    document.getElementById('submitBtn').classList.add('d-none');
-    document.getElementById('loadingSpinner').classList.remove('d-none');
-    
-// Thu thập dữ liệu từ form
-const formData = {
-    codeId: generateOrderCode(), // Tạo mã đơn hàng theo định dạng QCXXXX
-    sex: document.getElementById('sex').value,
-    name: document.getElementById('name').value,
-    email: document.getElementById('email').value,
-    tel: document.getElementById('tel').value,
-    culy: document.getElementById('culy').value,
-    sizeType: document.getElementById('sizeType').value,
-    size: document.getElementById('size').value,
-    total: document.getElementById('total').value.replace(/\./g, ''), // Loại bỏ dấu chấm
-    questions: document.getElementById('questions').value,
-    registerDate: new Date().toLocaleString('vi-VN') // Thêm ngày đăng ký
-};
 
-// Hàm tạo mã đơn hàng theo định dạng QCXXXX
-function generateOrderCode() {
-    // Tạo số ngẫu nhiên từ 1 đến 9999
-    const randomNumber = Math.floor(Math.random() * 9999) + 1;
-    
-    // Chuyển số thành chuỗi và đảm bảo nó có 4 chữ số bằng cách thêm số 0 vào đầu nếu cần
-    const paddedNumber = randomNumber.toString().padStart(4, '0');
-    
-    // Ghép với tiền tố QC để tạo mã đơn hàng
-    return 'QC' + paddedNumber;
-}
-    
-    // Gửi dữ liệu đến Google Sheets qua Google Apps Script
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbzY83TgrpImiqSberj9zItwggmByMEX63O2W3KY2pDLt5kzLlD4X3QSWz8UNdVs8Vs1/exec'; // URL của Google Apps Script
-    
-    // Chuyển đổi formData thành FormData để gửi POST request
-    const formDataToSend = new FormData();
-    for (const key in formData) {
-        formDataToSend.append(key, formData[key]);
-    }
-    
-    fetch(scriptURL, {
-        method: 'POST',
-        body: formDataToSend
-        })
-    })
-    .then(() => {
-        console.log('Dữ liệu gửi đi:', Object.fromEntries(formDataToSend));
-        
-        // Tạo query parameters từ formData để chuyển sang trang xác nhận
-        const queryParams = new URLSearchParams();
-        for (const key in formData) {
-            queryParams.append(key, formData[key]);
+        // Hàm cập nhật các tùy chọn size áo dựa trên kiểu áo
+        function updateSizeOptions() {
+            const sizeTypeSelect = document.getElementById("sizeType");
+            const sizeSelect = document.getElementById("size");
+
+            // Reset nội dung của dropdown size áo
+            sizeSelect.innerHTML = '<option value="">-- Chọn size áo --</option>';
+            sizeSelect.disabled = true; // Mặc định vô hiệu hóa dropdown size áo
+
+            // Kiểm tra xem kiểu áo có được chọn hay không
+            if (sizeTypeSelect.value) {
+                sizeSelect.disabled = false; // Kích hoạt dropdown size áo
+
+                // Thêm các tùy chọn size áo dựa trên kiểu áo đã chọn
+                let sizes = [];
+                if (sizeTypeSelect.value === "Nam") {
+                    sizes = ["S", "M", "L", "XL", "XXL"];
+                } else if (sizeTypeSelect.value === "Nữ") {
+                    sizes = ["XS", "S", "M", "L", "XL"];
+                } else if (sizeTypeSelect.value === "Trẻ em") {
+                    sizes = ["2XS", "XS", "S", "M"];
+                }
+
+                // Thêm các tùy chọn size áo vào dropdown
+                sizes.forEach(size => {
+                    const option = document.createElement("option");
+                    option.value = size;
+                    option.textContent = size;
+                    sizeSelect.appendChild(option);
+                });
+            }
         }
-        
-        // Chuyển hướng đến page2.html với query parameters
-        window.location.href = `page2.html?${queryParams.toString()}`;
-    })
-    .catch(error => {
-        console.error('Lỗi khi gửi dữ liệu:', error);
-        document.getElementById('submitErrorMessage').classList.remove('d-none');
-        document.getElementById('loadingSpinner').classList.add('d-none');
-        document.getElementById('submitBtn').classList.remove('d-none');
-    });
-});
+
+        // Xử lý submit form
+        document.getElementById('registrationFormElement').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            // Form validation
+            const form = event.target;
+            if (!form.checkValidity()) {
+                event.stopPropagation();
+                form.classList.add('was-validated');
+                return;
+            }
+
+            // Show loading spinner
+            document.getElementById('submitBtn').classList.add('d-none');
+            document.getElementById('loadingSpinner').classList.remove('d-none');
+
+            // Thu thập dữ liệu từ form
+            const formData = {
+                codeId: generateOrderCode(), // Tạo mã đơn hàng theo định dạng QCXXXX
+                sex: document.getElementById('sex').value,
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                tel: document.getElementById('tel').value,
+                culy: document.getElementById('culy').value,
+                sizeType: document.getElementById('sizeType').value,
+                size: document.getElementById('size').value,
+                total: document.getElementById('total').value.replace(/\./g, ''), // Loại bỏ dấu chấm
+                questions: document.getElementById('questions').value,
+                registerDate: new Date().toLocaleString('vi-VN') // Thêm ngày đăng ký
+            };
+
+            // Hàm tạo mã đơn hàng theo định dạng QCXXXX
+            function generateOrderCode() {
+                // Tạo số ngẫu nhiên từ 1 đến 9999
+                const randomNumber = Math.floor(Math.random() * 9999) + 1;
+                // Chuyển số thành chuỗi và đảm bảo nó có 4 chữ số bằng cách thêm số 0 vào đầu nếu cần
+                const paddedNumber = randomNumber.toString().padStart(4, '0');
+                // Ghép với tiền tố QC để tạo mã đơn hàng
+                return 'QC' + paddedNumber;
+            }
+
+            // Gửi dữ liệu đến Google Sheets qua Google Apps Script
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbzY83TgrpImiqSberj9zItwggmByMEX63O2W3KY2pDLt5kzLlD4X3QSWz8UNdVs8Vs1/exec'; // URL của Google Apps Script
+            const formDataToSend = new FormData();
+            for (const key in formData) {
+                formDataToSend.append(key, formData[key]);
+            }
+
+            fetch(scriptURL, { method: 'POST', body: formDataToSend })
+                .then(response => response.json())
+                .then(() => {
+                    console.log('Dữ liệu gửi đi:', Object.fromEntries(formDataToSend));
+                    // Hiển thị thông báo thành công
+                    document.getElementById('submitSuccessMessage').classList.remove('d-none');
+                    document.getElementById('loadingSpinner').classList.add('d-none');
+                    document.getElementById('submitBtn').classList.remove('d-none');
+                })
+                .catch(error => {
+                    console.error('Lỗi khi gửi dữ liệu:', error);
+                    document.getElementById('submitErrorMessage').classList.remove('d-none');
+                    document.getElementById('loadingSpinner').classList.add('d-none');
+                    document.getElementById('submitBtn').classList.remove('d-none');
+                });
+        });
     </script>
 </body>
 </html>
