@@ -386,47 +386,76 @@
             }
         }
         
-        document.getElementById('registrationFormElement').addEventListener('submit', function (event) {
-            event.preventDefault();
-            
-            // Form validation
-            const form = event.target;
-            if (!form.checkValidity()) {
-                event.stopPropagation();
-                form.classList.add('was-validated');
-                return;
-            }
-            
-            // Show loading spinner
-            document.getElementById('submitBtn').classList.add('d-none');
-            document.getElementById('loadingSpinner').classList.remove('d-none');
-            
-            // Thu thập dữ liệu từ form
-            const formData = {
-                codeId: Math.random().toString(36).substr(2, 8), // Tạo mã đơn hàng ngẫu nhiên
-                sex: document.getElementById('sex').value,
-                name: document.getElementById('name').value,
-                email: document.getElementById('email').value,
-                tel: document.getElementById('tel').value,
-                culy: document.getElementById('culy').value,
-                sizeType: document.getElementById('sizeType').value,
-                size: document.getElementById('size').value,
-                total: document.getElementById('total').value.replace(/\./g, ''), // Loại bỏ dấu chấm
-                questions: document.getElementById('questions').value
-            };
-            
-            // Tạo query parameters từ formData
-            const queryParams = new URLSearchParams();
-            for (const key in formData) {
-                queryParams.append(key, formData[key]);
-            }
-            
-            // Simulate processing time
-            setTimeout(() => {
-                // Chuyển hướng đến page2.html với query parameters
-                window.location.href = `page2.html?${queryParams.toString()}`;
-            }, 1000);
-        });
-    </script>
-</body>
-</html>
+       // Replace the form submission code with this Google Sheets integration
+document.getElementById('registrationFormElement').addEventListener('submit', function (event) {
+    event.preventDefault();
+    
+    // Form validation
+    const form = event.target;
+    if (!form.checkValidity()) {
+        event.stopPropagation();
+        form.classList.add('was-validated');
+        return;
+    }
+    
+    // Show loading spinner
+    document.getElementById('submitBtn').classList.add('d-none');
+    document.getElementById('loadingSpinner').classList.remove('d-none');
+    
+    // Thu thập dữ liệu từ form
+    const formData = {
+        codeId: Math.random().toString(36).substr(2, 8), // Tạo mã đơn hàng ngẫu nhiên
+        sex: document.getElementById('sex').value,
+        name: document.getElementById('name').value,
+        email: document.getElementById('email').value,
+        tel: document.getElementById('tel').value,
+        culy: document.getElementById('culy').value,
+        sizeType: document.getElementById('sizeType').value,
+        size: document.getElementById('size').value,
+        total: document.getElementById('total').value.replace(/\./g, ''), // Loại bỏ dấu chấm
+        questions: document.getElementById('questions').value,
+        registerDate: new Date().toLocaleString('vi-VN') // Thêm ngày đăng ký
+    };
+    
+    // URL của Web App Script được deploy từ Google Apps Script
+    const scriptURL = 'YOUR_GOOGLE_SCRIPT_URL_HERE';
+    
+    // Gửi dữ liệu tới Google Sheets thông qua Google Apps Script
+    fetch(scriptURL, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Success:', data);
+        
+        // Tạo query parameters từ formData để chuyển sang trang xác nhận
+        const queryParams = new URLSearchParams();
+        for (const key in formData) {
+            queryParams.append(key, formData[key]);
+        }
+        
+        // Chuyển hướng đến page2.html với query parameters
+        window.location.href = `page2.html?${queryParams.toString()}`;
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        // Hiển thị thông báo lỗi
+        document.getElementById('loadingSpinner').classList.add('d-none');
+        document.getElementById('submitBtn').classList.remove('d-none');
+        document.getElementById('submitErrorMessage').classList.remove('d-none');
+        
+        // Tự động ẩn thông báo lỗi sau 3 giây
+        setTimeout(() => {
+            document.getElementById('submitErrorMessage').classList.add('d-none');
+        }, 3000);
+    });
+});
