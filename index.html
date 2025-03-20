@@ -382,72 +382,76 @@
             totalInput.value = total.toLocaleString('vi-VN');
         }
 
-        // Xử lý submit form
-        document.getElementById('registrationFormElement').addEventListener('submit', function (event) {
-            event.preventDefault();
+       // Xử lý submit form
+document.getElementById('registrationFormElement').addEventListener('submit', function (event) {
+    event.preventDefault(); // Ngăn chặn hành vi mặc định của form
+    const form = event.target;
 
-            const form = event.target;
-            if (!form.checkValidity()) {
-                event.stopPropagation();
-                form.classList.add('was-validated');
-                return;
+    if (!form.checkValidity()) {
+        event.stopPropagation();
+        form.classList.add('was-validated'); // Hiển thị thông báo lỗi validation
+        return;
+    }
+
+    const sizeSelect = document.getElementById("size");
+    if (sizeSelect.disabled || !sizeSelect.value) {
+        alert("Vui lòng chọn size áo phù hợp.");
+        return;
+    }
+
+    // Ẩn nút submit và hiển thị spinner
+    document.getElementById('submitBtn').classList.add('d-none');
+    document.getElementById('loadingSpinner').classList.remove('d-none');
+
+    // Tạo dữ liệu để gửi
+    const formData = {
+        codeId: generateOrderCode(),
+        sex: document.getElementById('sex').value,
+        name: document.getElementById('name').value,
+        email: document.getElementById('email').value,
+        tel: document.getElementById('tel').value,
+        culy: document.getElementById('culy').value,
+        sizeType: document.getElementById('sizeType').value,
+        size: document.getElementById('size').value,
+        total: document.getElementById('total').value.replace(/\./g, ''),
+        questions: document.getElementById('questions').value,
+        registerDate: new Date().toLocaleString('vi-VN')
+    };
+
+    // Gửi dữ liệu đến Google Apps Script
+    fetch('https://script.google.com/macros/s/AKfycbzY83TgrpImiqSberj9zItwggmByMEX63O2W3KY2pDLt5kzLlD4X3QSWz8UNdVs8Vs1/exec', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+    })
+    .then(response => {
+        if (response.ok) {
+            // Tạo query parameters từ formData
+            const queryParams = new URLSearchParams();
+            for (const key in formData) {
+                queryParams.append(key, formData[key]);
             }
 
-            const sizeSelect = document.getElementById("size");
-            if (sizeSelect.disabled || !sizeSelect.value) {
-                alert("Vui lòng chọn size áo phù hợp.");
-                return;
-            }
-
-            document.getElementById('submitBtn').classList.add('d-none');
-            document.getElementById('loadingSpinner').classList.remove('d-none');
-
-            const formData = {
-                codeId: generateOrderCode(),
-                sex: document.getElementById('sex').value,
-                name: document.getElementById('name').value,
-                email: document.getElementById('email').value,
-                tel: document.getElementById('tel').value,
-                culy: document.getElementById('culy').value,
-                sizeType: document.getElementById('sizeType').value,
-                size: document.getElementById('size').value,
-                total: document.getElementById('total').value.replace(/\./g, ''),
-                questions: document.getElementById('questions').value,
-                registerDate: new Date().toLocaleString('vi-VN')
-            };
-
-            fetch('https://script.google.com/macros/s/AKfycbzY83TgrpImiqSberj9zItwggmByMEX63O2W3KY2pDLt5kzLlD4X3QSWz8UNdVs8Vs1/exec', {
-                method: 'POST',
-                mode: 'no-cors',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(formData)
-            })
-            .then(() => {
-                document.getElementById('submitSuccessMessage').classList.remove('d-none');
-                document.getElementById('loadingSpinner').classList.add('d-none');
-            })
-            .catch(error => {
-                console.error('Lỗi khi gửi dữ liệu:', error);
-                document.getElementById('submitErrorMessage').classList.remove('d-none');
-                document.getElementById('loadingSpinner').classList.add('d-none');
-                document.getElementById('submitBtn').classList.remove('d-none');
-            });
-        });
-
+            // Chuyển hướng đến page2.html với query parameters
+            window.location.href = `page2.html?${queryParams.toString()}`;
+        } else {
+            throw new Error('Lỗi khi gửi dữ liệu.');
+        }
+    })
+    .catch(error => {
+        console.error('Lỗi khi gửi dữ liệu:', error);
+        document.getElementById('submitErrorMessage').classList.remove('d-none');
+        document.getElementById('loadingSpinner').classList.add('d-none');
+        document.getElementById('submitBtn').classList.remove('d-none');
+    });
+});
         // Hàm tạo mã đơn hàng theo định dạng QCXXXX
         function generateOrderCode() {
             const randomNumber = Math.floor(Math.random() * 9999) + 1;
             const paddedNumber = randomNumber.toString().padStart(4, '0');
             return 'QC' + paddedNumber;
         }
-        // Tạo query parameters từ formData để chuyển sang trang xác nhận
-const queryParams = new URLSearchParams();
-for (const key in formData) {
-    queryParams.append(key, formData[key]);
-}
 
-// Chuyển hướng đến page2.html với query parameters
-window.location.href = `page2.html?${queryParams.toString()}`;
     </script>
 </body>
 </html>
