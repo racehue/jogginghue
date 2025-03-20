@@ -5,69 +5,183 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Thanh toán Giải chạy Jogging Quảng Công Biển Gọi</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css">
-      /* CSS giữ nguyên như trước */
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #f8f9fa;
+      background-color: #f0f2f5;
       padding: 20px;
     }
     .container {
       max-width: 600px;
       background-color: white;
-      border-radius: 10px;
-      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+      padding: 25px;
       margin: 20px auto;
+      transition: all 0.3s ease;
     }
     .header {
       text-align: center;
       margin-bottom: 30px;
-      border-bottom: 1px solid #dee2e6;
+      border-bottom: 2px solid #eaeaea;
       padding-bottom: 15px;
+      position: relative;
+    }
+    .header h2 {
+      color: #2c3e50;
+      font-weight: 600;
+    }
+    .header h4 {
+      color: #3498db;
+      margin-top: 5px;
     }
     .info-section {
-      margin-bottom: 25px;
+      margin-bottom: 30px;
+      background-color: #f8f9fa;
+      border-radius: 10px;
+      padding: 15px;
+    }
+    .info-section h5 {
+      color: #2c3e50;
+      margin-bottom: 15px;
+      font-weight: 600;
+      border-bottom: 1px solid #e0e0e0;
+      padding-bottom: 10px;
     }
     .info-item {
-      margin-bottom: 10px;
+      margin-bottom: 12px;
       display: flex;
       justify-content: space-between;
-      border-bottom: 1px solid #f2f2f2;
+      border-bottom: 1px dashed #eaeaea;
       padding-bottom: 10px;
+    }
+    .info-item span:first-child {
+      color: #7f8c8d;
+      font-weight: 500;
+    }
+    .info-item span:last-child {
+      font-weight: 600;
+      color: #2c3e50;
     }
     .payment-section {
       text-align: center;
       margin-top: 30px;
       padding: 20px;
       background-color: #f8f9fa;
-      border-radius: 8px;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+    .payment-section h5 {
+      color: #2c3e50;
+      font-weight: 600;
+      margin-bottom: 20px;
     }
     .payment-qr-code {
-      max-width: 200px;
+      max-width: 220px;
       margin: 20px auto;
       display: block;
+      border: 1px solid #eaeaea;
+      border-radius: 10px;
+      padding: 10px;
+      background-color: white;
+      transition: transform 0.3s ease;
+    }
+    .payment-qr-code:hover {
+      transform: scale(1.05);
     }
     .payment-info {
       margin-top: 20px;
       padding: 15px;
       background-color: #e9ecef;
-      border-radius: 8px;
+      border-radius: 10px;
       font-size: 14px;
+      border-left: 4px solid #3498db;
+    }
+    .payment-info p {
+      margin-bottom: 8px;
     }
     .btn-success {
       background-color: #2ecc71;
       border-color: #27ae60;
+      padding: 10px 20px;
+      font-weight: 600;
+      border-radius: 30px;
+      transition: all 0.3s ease;
     }
     .btn-success:hover {
       background-color: #27ae60;
       border-color: #219653;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(46, 204, 113, 0.3);
+    }
+    .btn-success:disabled {
+      background-color: #95a5a6;
+      border-color: #7f8c8d;
     }
     .footer {
       text-align: center;
       margin-top: 30px;
+      font-size: 13px;
+      color: #95a5a6;
+      border-top: 1px solid #eaeaea;
+      padding-top: 20px;
+    }
+    .footer a {
+      color: #3498db;
+      text-decoration: none;
+    }
+    .footer a:hover {
+      text-decoration: underline;
+    }
+    .copy-btn {
+      cursor: pointer;
+      background: none;
+      border: none;
+      color: #3498db;
+      font-size: 14px;
+      margin-left: 5px;
+    }
+    .copy-btn:hover {
+      color: #2980b9;
+    }
+    .copied-message {
+      color: #27ae60;
       font-size: 12px;
-      color: #6c757d;
+      margin-left: 5px;
+      display: none;
+    }
+    .countdown {
+      margin-top: 15px;
+      font-size: 14px;
+      color: #e74c3c;
+    }
+    .spinner-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 30px 0;
+    }
+    .price-highlight {
+      font-weight: bold;
+      color: #e74c3c;
+    }
+    .status-badge {
+      position: absolute;
+      top: 0;
+      right: 0;
+      background-color: #f39c12;
+      color: white;
+      padding: 5px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: bold;
+    }
+    @media (max-width: 576px) {
+      .container {
+        padding: 15px;
+      }
     }
   </style>
 </head>
@@ -76,10 +190,11 @@
     <div class="header">
       <h2>Thanh toán Giải chạy</h2>
       <h4>Jogging Quảng Công Biển Gọi</h4>
+      <span class="status-badge">Chờ thanh toán</span>
     </div>
 
     <div class="info-section">
-      <h5>Thông tin đăng ký</h5>
+      <h5><i class="fas fa-info-circle"></i> Thông tin đăng ký</h5>
       
       <div class="info-item">
         <span>Mã đơn hàng:</span>
@@ -103,55 +218,59 @@
       
       <div class="info-item">
         <span>Số tiền:</span>
-        <span id="total"></span>
+        <span id="total" class="price-highlight"></span>
       </div>
     </div>
 
     <div class="payment-section">
-      <h5>Quét mã QR để thanh toán</h5>
-      <div id="qr-container">
+      <h5><i class="fas fa-qrcode"></i> Quét mã QR để thanh toán</h5>
+      <div id="qr-container" class="spinner-container">
         <div class="spinner-border text-primary" role="status">
           <span class="visually-hidden">Đang tải...</span>
         </div>
         <p>Đang tải mã QR...</p>
       </div>
       
-      <button id="confirmBtn" class="btn btn-success mt-3" disabled>
-        Tôi đã thanh toán
+      <div id="countdown" class="countdown"></div>
+      
+      <button id="confirmBtn" class="btn btn-success mt-4" disabled>
+        <i class="fas fa-check-circle"></i> Tôi đã thanh toán
+      </button>
+      
+      <button id="cancelBtn" class="btn btn-outline-danger mt-3">
+        <i class="fas fa-times-circle"></i> Hủy giao dịch
       </button>
     </div>
 
     <div class="footer">
       <p>© 2025 Giải chạy Jogging Quảng Công Biển Gọi</p>
-      <p>Mọi thắc mắc xin liên hệ: <a href="mailto:support@jog-bg25.com">support@jog-bg25.com</a></p>
+      <p>Mọi thắc mắc xin liên hệ: <a href="mailto:support@jog-bg25.com">support@jog-bg25.com</a> | <a href="tel:0388178701">0388178701</a></p>
     </div>
   </div>
 
-  <script src="js/script.js"></script>
+  <script>
     // Lấy query parameters từ URL
     const params = new URLSearchParams(window.location.search);
 
     // Hiển thị thông tin đăng ký
-    document.getElementById('codeId').textContent = params.get('codeId') || '';
-    document.getElementById('name').textContent = params.get('name') || '';
-    document.getElementById('tel').textContent = params.get('tel') || '';
-    document.getElementById('culy').textContent = params.get('culy') || '';
-    document.getElementById('total').textContent = `${params.get('total')} VNĐ`;
+    document.getElementById('codeId').textContent = params.get('codeId') || 'BG25001';
+    document.getElementById('name').textContent = params.get('name') || 'Nguyễn Văn A';
+    document.getElementById('tel').textContent = params.get('tel') || '0123456789';
+    document.getElementById('culy').textContent = params.get('culy') || '10K';
+    
+    // Định dạng số tiền
+    const total = params.get('total') || '300000';
+    document.getElementById('total').textContent = `${Number(total).toLocaleString('vi-VN')} VNĐ`;
 
     // Tạo mã QR bằng API SePay
     function generateSepayQR() {
         const qrContainer = document.getElementById('qr-container');
         try {
             // Lấy thông tin từ query parameters
-            const codeId = params.get('codeId');
-            const tel = params.get('tel');
-            const culy = params.get('culy');
-            const total = params.get('total');
-
-            // Kiểm tra dữ liệu đầu vào
-            if (!codeId || !tel || !culy || !total) {
-                throw new Error("Thiếu thông tin cần thiết để tạo mã QR");
-            }
+            const codeId = params.get('codeId') || 'BG25001';
+            const tel = params.get('tel') || '0123456789';
+            const culy = params.get('culy') || '10K';
+            const total = params.get('total') || '300000';
 
             // Định dạng số tiền (đơn vị đồng)
             const amountInCents = Math.round(Number(total.replace(/,/g, '')));
@@ -167,23 +286,102 @@
                 <img src="${sepayUrl}" class="payment-qr-code" alt="QR Code">
                 <div class="payment-info">
                     <p><strong>Ngân hàng:</strong> MB Bank</p>
-                    <p><strong>Số TK:</strong> 0388178701</p>
-                    <p><strong>Nội dung:</strong> ${description}</p>
+                    <p><strong>Số TK:</strong> 0388178701 <button class="copy-btn" onclick="copyToClipboard('0388178701')"><i class="fas fa-copy"></i></button><span class="copied-message" id="copyMsg1">Đã sao chép!</span></p>
+                    <p><strong>Chủ TK:</strong> Nguyễn Quảng Biển</p>
+                    <p><strong>Nội dung:</strong> ${description} <button class="copy-btn" onclick="copyToClipboard('${description}')"><i class="fas fa-copy"></i></button><span class="copied-message" id="copyMsg2">Đã sao chép!</span></p>
+                    <p><strong>Số tiền:</strong> ${Number(total).toLocaleString('vi-VN')} VNĐ</p>
                 </div>
             `;
             document.getElementById('confirmBtn').disabled = false; // Kích hoạt nút "Tôi đã thanh toán"
+            
+            // Bắt đầu đếm ngược
+            startCountdown(15 * 60); // 15 phút
         } catch (error) {
             console.error('Lỗi khi tạo mã QR:', error.message);
-            qrContainer.innerHTML = '<div class="alert alert-danger">Không thể tạo mã QR. Vui lòng kiểm tra lại thông tin.</div>';
+            qrContainer.innerHTML = '<div class="alert alert-danger"><i class="fas fa-exclamation-triangle"></i> Không thể tạo mã QR. Vui lòng kiểm tra lại thông tin.</div>';
         }
+    }
+
+    // Hàm sao chép vào clipboard
+    function copyToClipboard(text) {
+        navigator.clipboard.writeText(text).then(() => {
+            // Xác định ID thông báo dựa trên nội dung được sao chép
+            let msgId = text.includes('BG25') ? 'copyMsg2' : 'copyMsg1';
+            
+            // Hiển thị thông báo
+            const copyMsg = document.getElementById(msgId);
+            copyMsg.style.display = 'inline';
+            
+            // Ẩn thông báo sau 2 giây
+            setTimeout(() => {
+                copyMsg.style.display = 'none';
+            }, 2000);
+        });
+    }
+
+    // Hàm đếm ngược thời gian
+    function startCountdown(seconds) {
+        const countdownElement = document.getElementById('countdown');
+        let remainingSeconds = seconds;
+        
+        function updateCountdown() {
+            const minutes = Math.floor(remainingSeconds / 60);
+            const seconds = remainingSeconds % 60;
+            
+            countdownElement.innerHTML = `<i class="fas fa-clock"></i> Vui lòng thanh toán trong: <strong>${minutes}:${seconds < 10 ? '0' : ''}${seconds}</strong>`;
+            
+            if (remainingSeconds <= 0) {
+                clearInterval(countdownInterval);
+                countdownElement.innerHTML = '<span style="color: #e74c3c;"><i class="fas fa-exclamation-circle"></i> Hết thời gian thanh toán. Vui lòng đăng ký lại.</span>';
+                document.getElementById('confirmBtn').disabled = true;
+            }
+            
+            remainingSeconds--;
+        }
+        
+        updateCountdown(); // Cập nhật ngay lập tức
+        const countdownInterval = setInterval(updateCountdown, 1000);
     }
 
     // Xử lý nút xác nhận thanh toán
     document.getElementById('confirmBtn').addEventListener('click', function () {
-        alert('Cảm ơn bạn đã thanh toán!');
-        window.location.href = 'index.html'; // Quay về trang chính
+        // Thay đổi trạng thái
+        document.querySelector('.status-badge').textContent = 'Đã thanh toán';
+        document.querySelector('.status-badge').style.backgroundColor = '#27ae60';
+        
+        // Hiển thị thông báo thành công
+        const qrContainer = document.getElementById('qr-container');
+        qrContainer.innerHTML = `
+            <div class="alert alert-success mt-3">
+                <i class="fas fa-check-circle fa-3x mb-3"></i>
+                <h5>Thanh toán thành công!</h5>
+                <p>Cảm ơn bạn đã đăng ký tham gia giải chạy Jogging Quảng Công Biển Gọi.</p>
+                <p>Chúng tôi sẽ liên hệ với bạn trong thời gian sớm nhất.</p>
+            </div>
+        `;
+        
+        // Ẩn các nút
+        document.getElementById('confirmBtn').style.display = 'none';
+        document.getElementById('cancelBtn').style.display = 'none';
+        document.getElementById('countdown').style.display = 'none';
+        
+        // Tự động chuyển hướng sau 5 giây
+        setTimeout(function() {
+            window.location.href = 'index.html?status=success&codeId=' + params.get('codeId');
+        }, 5000);
+    });
+
+    // Xử lý nút hủy giao dịch
+    document.getElementById('cancelBtn').addEventListener('click', function () {
+        if (confirm('Bạn có chắc chắn muốn hủy giao dịch này?')) {
+            window.location.href = 'index.html?status=canceled';
+        }
     });
 
     // Tự động tạo mã QR khi trang được tải
-    generateSepayQR();
-</script>
+    window.onload = function() {
+        setTimeout(generateSepayQR, 1000); // Thêm độ trễ nhỏ để hiệu ứng loading
+    };
+  </script>
+</body>
+</html>
