@@ -68,6 +68,7 @@ function doPost(e) {
         }
     } catch (error) {
         // Handle unexpected errors
+        Logger.log(error); // Log error for debugging
         return ContentService.createTextOutput(
             JSON.stringify({ success: false, message: "Đã xảy ra lỗi. Vui lòng thử lại sau." })
         ).setMimeType(ContentService.MimeType.JSON);
@@ -81,8 +82,9 @@ function processForm(formData) {
         const ss = SpreadsheetApp.openById("132JA2nZ1rwwuUBcAMVce7YcsrDZSW2sVrWICKkm5WEI");
         let sheet = ss.getSheetByName('Form Đăng ký');
 
+        // Create sheet if it doesn't exist
         if (!sheet) {
-            sheet = ss.insertSheet('Form Đăng ký'); // Create sheet if it doesn't exist
+            sheet = ss.insertSheet('Form Đăng ký');
             sheet.appendRow([
                 'Timestamp', 'Code-ID', 'Danh xưng', 'Họ tên', 'Email', 'SĐT', 'Cự ly', 'Kiểu áo', 'Size', 'Tổng tiền', 'Câu hỏi'
             ]);
@@ -121,6 +123,7 @@ function processForm(formData) {
             redirect: url
         };
     } catch (error) {
+        Logger.log(error); // Log error for debugging
         return {
             success: false,
             message: 'Đã xảy ra lỗi: ' + error.message
