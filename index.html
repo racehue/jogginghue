@@ -414,20 +414,32 @@ document.getElementById('registrationFormElement').addEventListener('submit', fu
     document.getElementById('submitBtn').classList.add('d-none');
     document.getElementById('loadingSpinner').classList.remove('d-none');
     
-    // Thu thập dữ liệu từ form
-    const formData = {
-        codeId: Math.random().toString(36).substr(2, 8), // Tạo mã đơn hàng ngẫu nhiên
-        sex: document.getElementById('sex').value,
-        name: document.getElementById('name').value,
-        email: document.getElementById('email').value,
-        tel: document.getElementById('tel').value,
-        culy: document.getElementById('culy').value,
-        sizeType: document.getElementById('sizeType').value,
-        size: document.getElementById('size').value,
-        total: document.getElementById('total').value.replace(/\./g, ''), // Loại bỏ dấu chấm
-        questions: document.getElementById('questions').value,
-        registerDate: new Date().toLocaleString('vi-VN') // Thêm ngày đăng ký
-    };
+// Thu thập dữ liệu từ form
+const formData = {
+    codeId: generateOrderCode(), // Tạo mã đơn hàng theo định dạng QCXXXX
+    sex: document.getElementById('sex').value,
+    name: document.getElementById('name').value,
+    email: document.getElementById('email').value,
+    tel: document.getElementById('tel').value,
+    culy: document.getElementById('culy').value,
+    sizeType: document.getElementById('sizeType').value,
+    size: document.getElementById('size').value,
+    total: document.getElementById('total').value.replace(/\./g, ''), // Loại bỏ dấu chấm
+    questions: document.getElementById('questions').value,
+    registerDate: new Date().toLocaleString('vi-VN') // Thêm ngày đăng ký
+};
+
+// Hàm tạo mã đơn hàng theo định dạng QCXXXX
+function generateOrderCode() {
+    // Tạo số ngẫu nhiên từ 1 đến 9999
+    const randomNumber = Math.floor(Math.random() * 9999) + 1;
+    
+    // Chuyển số thành chuỗi và đảm bảo nó có 4 chữ số bằng cách thêm số 0 vào đầu nếu cần
+    const paddedNumber = randomNumber.toString().padStart(4, '0');
+    
+    // Ghép với tiền tố QC để tạo mã đơn hàng
+    return 'QC' + paddedNumber;
+}
     
     // Gửi dữ liệu đến Google Sheets qua Google Apps Script
     const scriptURL = 'https://script.google.com/macros/s/AKfycbzY83TgrpImiqSberj9zItwggmByMEX63O2W3KY2pDLt5kzLlD4X3QSWz8UNdVs8Vs1/exec'; // URL của Google Apps Script
