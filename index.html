@@ -362,112 +362,85 @@
         }
         
         function updateSizeOptions() {
-    const sizeTypeSelect = document.getElementById("sizeType");
-    const sizeSelect = document.getElementById("size");
-    
-    // Đặt lại nội dung của dropdown size
-    sizeSelect.innerHTML = '<option value="">-- Chọn size áo --</option>';
-    
-    // Kiểm tra xem sizeTypeSelect có giá trị hay không
-    if (sizeTypeSelect.value) {
-        // Nếu có giá trị, bỏ thuộc tính disabled
-        sizeSelect.disabled = false;
-        
-        // Thêm các options tương ứng với kiểu áo đã chọn
-        if (sizeTypeSelect.value === "Nam") {
-            sizeSelect.add(new Option("S", "S"));
-            sizeSelect.add(new Option("M", "M"));
-            sizeSelect.add(new Option("L", "L"));
-            sizeSelect.add(new Option("XL", "XL"));
-            sizeSelect.add(new Option("XXL", "XXL"));
-        } else if (sizeTypeSelect.value === "Nữ") {
-            sizeSelect.add(new Option("XS", "XS"));
-            sizeSelect.add(new Option("S", "S"));
-            sizeSelect.add(new Option("M", "M"));
-            sizeSelect.add(new Option("L", "L"));
-            sizeSelect.add(new Option("XL", "XL"));
-        } else if (sizeTypeSelect.value === "Trẻ em") {
-            sizeSelect.add(new Option("2XS", "2XS"));
-            sizeSelect.add(new Option("XS", "XS"));
-            sizeSelect.add(new Option("S", "S"));
-            sizeSelect.add(new Option("M", "M"));
-        }
-    } else {
-        // Nếu không có giá trị, giữ thuộc tính disabled
-        sizeSelect.disabled = true;
-    }
-}
-        
-       // Replace the form submission code with this Google Sheets integration
-document.getElementById('registrationFormElement').addEventListener('submit', function (event) {
-    event.preventDefault();
-    
-    // Form validation
-    const form = event.target;
-    if (!form.checkValidity()) {
-        event.stopPropagation();
-        form.classList.add('was-validated');
-        return;
-    }
-    
-    // Show loading spinner
-    document.getElementById('submitBtn').classList.add('d-none');
-    document.getElementById('loadingSpinner').classList.remove('d-none');
-    
-    // Thu thập dữ liệu từ form
-    const formData = {
-        codeId: Math.random().toString(36).substr(2, 8), // Tạo mã đơn hàng ngẫu nhiên
-        sex: document.getElementById('sex').value,
-        name: document.getElementById('name').value,
-        email: document.getElementById('email').value,
-        tel: document.getElementById('tel').value,
-        culy: document.getElementById('culy').value,
-        sizeType: document.getElementById('sizeType').value,
-        size: document.getElementById('size').value,
-        total: document.getElementById('total').value.replace(/\./g, ''), // Loại bỏ dấu chấm
-        questions: document.getElementById('questions').value,
-        registerDate: new Date().toLocaleString('vi-VN') // Thêm ngày đăng ký
-    };
-    
-    // URL của Web App Script được deploy từ Google Apps Script
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbzY83TgrpImiqSberj9zItwggmByMEX63O2W3KY2pDLt5kzLlD4X3QSWz8UNdVs8Vs1/exec';
-    
-    // Gửi dữ liệu tới Google Sheets thông qua Google Apps Script
-    fetch(scriptURL, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-    .then(data => {
-        console.log('Success:', data);
-        
-        // Tạo query parameters từ formData để chuyển sang trang xác nhận
-        const queryParams = new URLSearchParams();
-        for (const key in formData) {
-            queryParams.append(key, formData[key]);
+            const sizeTypeSelect = document.getElementById("sizeType");
+            const sizeSelect = document.getElementById("size");
+            
+            // Đặt lại nội dung của dropdown size
+            sizeSelect.innerHTML = '<option value="">-- Chọn size áo --</option>';
+            
+            // Kiểm tra xem sizeTypeSelect có giá trị hay không
+            if (sizeTypeSelect.value) {
+                // Nếu có giá trị, bỏ thuộc tính disabled
+                sizeSelect.disabled = false;
+                
+                // Thêm các options tương ứng với kiểu áo đã chọn
+                if (sizeTypeSelect.value === "Nam") {
+                    sizeSelect.add(new Option("S", "S"));
+                    sizeSelect.add(new Option("M", "M"));
+                    sizeSelect.add(new Option("L", "L"));
+                    sizeSelect.add(new Option("XL", "XL"));
+                    sizeSelect.add(new Option("XXL", "XXL"));
+                } else if (sizeTypeSelect.value === "Nữ") {
+                    sizeSelect.add(new Option("XS", "XS"));
+                    sizeSelect.add(new Option("S", "S"));
+                    sizeSelect.add(new Option("M", "M"));
+                    sizeSelect.add(new Option("L", "L"));
+                    sizeSelect.add(new Option("XL", "XL"));
+                } else if (sizeTypeSelect.value === "Trẻ em") {
+                    sizeSelect.add(new Option("2XS", "2XS"));
+                    sizeSelect.add(new Option("XS", "XS"));
+                    sizeSelect.add(new Option("S", "S"));
+                    sizeSelect.add(new Option("M", "M"));
+                }
+            } else {
+                // Nếu không có giá trị, giữ thuộc tính disabled
+                sizeSelect.disabled = true;
+            }
         }
         
-        // Chuyển hướng đến page2.html với query parameters
-        window.location.href = `page2.html?${queryParams.toString()}`;
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        // Hiển thị thông báo lỗi
-        document.getElementById('loadingSpinner').classList.add('d-none');
-        document.getElementById('submitBtn').classList.remove('d-none');
-        document.getElementById('submitErrorMessage').classList.remove('d-none');
-        
-        // Tự động ẩn thông báo lỗi sau 3 giây
-        setTimeout(() => {
-            document.getElementById('submitErrorMessage').classList.add('d-none');
-        }, 3000);
-    });
-});
+        // Replace the form submission code with this simplified version
+        document.getElementById('registrationFormElement').addEventListener('submit', function (event) {
+            event.preventDefault();
+            
+            // Form validation
+            const form = event.target;
+            if (!form.checkValidity()) {
+                event.stopPropagation();
+                form.classList.add('was-validated');
+                return;
+            }
+            
+            // Show loading spinner
+            document.getElementById('submitBtn').classList.add('d-none');
+            document.getElementById('loadingSpinner').classList.remove('d-none');
+            
+            // Thu thập dữ liệu từ form
+            const formData = {
+                codeId: Math.random().toString(36).substr(2, 8), // Tạo mã đơn hàng ngẫu nhiên
+                sex: document.getElementById('sex').value,
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                tel: document.getElementById('tel').value,
+                culy: document.getElementById('culy').value,
+                sizeType: document.getElementById('sizeType').value,
+                size: document.getElementById('size').value,
+                total: document.getElementById('total').value.replace(/\./g, ''), // Loại bỏ dấu chấm
+                questions: document.getElementById('questions').value,
+                registerDate: new Date().toLocaleString('vi-VN') // Thêm ngày đăng ký
+            };
+            
+            // Tạo query parameters từ formData để chuyển sang trang xác nhận
+            const queryParams = new URLSearchParams();
+            for (const key in formData) {
+                queryParams.append(key, formData[key]);
+            }
+            
+            // Simulate processing time
+            setTimeout(() => {
+                // Chuyển hướng đến page2.html với query parameters
+                window.location.href = `page2.html?${queryParams.toString()}`;
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
