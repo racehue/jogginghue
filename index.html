@@ -399,98 +399,67 @@
          }
  
          // Cập nhật xử lý submit form để lưu dữ liệu vào Google Sheets
-         document.getElementById('registrationFormElement').addEventListener('submit', function (event) {
-             event.preventDefault();
-             
-             // Form validation
-             const form = event.target;
-             if (!form.checkValidity()) {
-                 event.stopPropagation();
-                 form.classList.add('was-validated');
-                 return;
-             }
-             
-             // Show loading spinner
-             document.getElementById('submitBtn').classList.add('d-none');
-             document.getElementById('loadingSpinner').classList.remove('d-none');
-             
-             // Thu thập dữ liệu từ form
-             const formData = {
-                 codeId: Math.random().toString(36).substr(2, 8), // Tạo mã đơn hàng ngẫu nhiên
-                 sex: document.getElementById('sex').value,
-                 name: document.getElementById('name').value,
-                 email: document.getElementById('email').value,
-                 tel: document.getElementById('tel').value,
-                 culy: document.getElementById('culy').value,
-                 sizeType: document.getElementById('sizeType').value,
-                 size: document.getElementById('size').value,
-                 total: document.getElementById('total').value.replace(/\./g, ''), // Loại bỏ dấu chấm
-                 questions: document.getElementById('questions').value,
-                 registerDate: new Date().toLocaleString('vi-VN') // Thêm ngày đăng ký
-             };
-             
-             // Gửi dữ liệu đến Google Sheets qua Google Apps Script
-             const scriptURL = 'https://script.google.com/macros/s/AKfycbzY83TgrpImiqSberj9zItwggmByMEX63O2W3KY2pDLt5kzLlD4X3QSWz8UNdVs8Vs1/exec'; // Thay thế bằng URL của Google Apps Script
-             
-             fetch(scriptURL, {
-                 method: 'POST',
-                 mode: 'no-cors', // Quan trọng để tránh lỗi CORS
-                 headers: {
-                     'Content-Type': 'application/json'
-                 },
-                 body: JSON.stringify(formData)
-             })
-             .then(response => {
-                 console.log('Đã gửi dữ liệu thành công!');
-                 
-                 // Tạo query parameters từ formData để chuyển sang trang xác nhận
-                 const queryParams = new URLSearchParams();
-                 for (const key in formData) {
-                     queryParams.append(key, formData[key]);
-                 }
-                 
-                 // Chuyển hướng đến page2.html với query parameters
-                 window.location.href = `page2.html?${queryParams.toString()}`;
-             })
-             .catch(error => {
-                 console.error('Lỗi khi gửi dữ liệu:', error);
-                 document.getElementById('submitErrorMessage').classList.remove('d-none');
-                 document.getElementById('loadingSpinner').classList.add('d-none');
-                 document.getElementById('submitBtn').classList.remove('d-none');
-             });
-         });
- document.getElementById('registrationFormElement').addEventListener('submit', function (event) {
-     event.preventDefault();
-     
-     // Form validation
-     const form = event.target;
-     if (!form.checkValidity()) {
-         event.stopPropagation();
-         form.classList.add('was-validated');
-         return;
-     }
-     
-     // Show loading spinner
-     document.getElementById('submitBtn').classList.add('d-none');
-     document.getElementById('loadingSpinner').classList.remove('d-none');
-     
-     // Thu thập dữ liệu từ form
-     const formData = {
-         codeId: Math.random().toString(36).substr(2, 8), // Tạo mã đơn hàng ngẫu nhiên
-         sex: document.getElementById('sex').value,
-         name: document.getElementById('name').value,
-         email: document.getElementById('email').value,
-         tel: document.getElementById('tel').value,
-         culy: document.getElementById('culy').value,
-         sizeType: document.getElementById('sizeType').value,
-         size: document.getElementById('size').value,
-         total: document.getElementById('total').value.replace(/\./g, ''), // Loại bỏ dấu chấm
-         questions: document.getElementById('questions').value,
-         registerDate: new Date().toLocaleString('vi-VN') // Thêm ngày đăng ký
-     };
-     
-     // Gửi dữ liệu đến Google Sheets qua Google Apps Script
-     const scriptURL = 'https://script.google.com/macros/s/AKfycbzY83TgrpImiqSberj9zItwggmByMEX63O2W3KY2pDLt5kzLlD4X3QSWz8UNdVs8Vs1/exec'; // URL của Google Apps Script
+        document.getElementById('registrationFormElement').addEventListener('submit', function (event) {
+    event.preventDefault();
+
+    // Form validation
+    const form = event.target;
+    if (!form.checkValidity()) {
+        event.stopPropagation();
+        form.classList.add('was-validated');
+        return;
+    }
+
+    // Show loading spinner
+    document.getElementById('submitBtn').classList.add('d-none');
+    document.getElementById('loadingSpinner').classList.remove('d-none');
+
+    // Thu thập dữ liệu từ form
+    const formData = {
+        codeId: Math.random().toString(36).substr(2, 8), // Tạo mã đơn hàng ngẫu nhiên
+        sex: document.getElementById('sex').value,
+        name: document.getElementById('name').value,
+        email: document.getElementById('email').value,
+        tel: document.getElementById('tel').value,
+        culy: document.getElementById('culy').value,
+        sizeType: document.getElementById('sizeType').value,
+        size: document.getElementById('size').value,
+        total: document.getElementById('total').value.replace(/\./g, ''), // Loại bỏ dấu chấm
+        questions: document.getElementById('questions').value,
+        registerDate: new Date().toLocaleString('vi-VN') // Thêm ngày đăng ký
+    };
+
+    // Gửi dữ liệu đến Google Sheets qua Google Apps Script
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbzY83TgrpImiqSberj9zItwggmByMEX63O2W3KY2pDLt5kzLlD4X3QSWz8UNdVs8Vs1/exec'; // URL của Google Apps Script
+
+    // Chuyển đổi formData thành FormData để gửi POST request
+    const formDataToSend = new FormData();
+    for (const key in formData) {
+        formDataToSend.append(key, formData[key]);
+    }
+
+    fetch(scriptURL, {
+        method: 'POST',
+        mode: 'no-cors', // Cần thiết để tránh lỗi CORS
+        body: formDataToSend
+    })
+    .then(() => {
+        console.log('Đã gửi dữ liệu thành công!');
+        // Tạo query parameters từ formData để chuyển sang trang xác nhận
+        const queryParams = new URLSearchParams();
+        for (const key in formData) {
+            queryParams.append(key, formData[key]);
+        }
+        // Chuyển hướng đến page2.html với query parameters
+      console.log(`page2.html?${queryParams.toString()}`);
+    })
+    .catch(error => {
+        console.error('Lỗi khi gửi dữ liệu:', error);
+        document.getElementById('submitErrorMessage').classList.remove('d-none');
+        document.getElementById('loadingSpinner').classList.add('d-none');
+        document.getElementById('submitBtn').classList.remove('d-none');
+    });
+});
      
      // Chuyển đổi formData thành FormData để gửi POST request
      const formDataToSend = new FormData();
@@ -513,7 +482,7 @@
          }
          
          // Chuyển hướng đến page2.html với query parameters
-         window.location.href = `page2.html?${queryParams.toString()}`;
+         console.log(`page2.html?${queryParams.toString()}`);
      })
      .catch(error => {
          console.error('Lỗi khi gửi dữ liệu:', error);
