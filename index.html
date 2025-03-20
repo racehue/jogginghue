@@ -284,25 +284,25 @@
                              </select>
                              <div class="invalid-feedback">Vui lòng chọn cự ly.</div>
                          </div>
-                         <div class="col-md-6 mb-3">
-                             <label for="sizeType" class="form-label required-field">Kiểu áo</label>
-                             <select id="sizeType" name="sizeType" class="form-select" required onchange="updateSizeOptions(); updateTotal()">
-                                 <option value="">-- Chọn kiểu áo --</option>
-                                 <option value="Nam" data-price="100000">Áo Nam - 100.000đ</option>
-                                 <option value="Nữ" data-price="100000">Áo Nữ - 100.000đ</option>
-                                 <option value="Trẻ em" data-price="80000">Áo Trẻ em - 80.000đ</option>
-                             </select>
-                             <div class="invalid-feedback">Vui lòng chọn kiểu áo.</div>
-                         </div>
-                     </div>
-                     <div class="row">
-                         <div class="col-md-6 mb-3">
-                             <label for="size" class="form-label required-field">Size áo</label>
-                             <select id="size" name="size" class="form-select" required disabled>
-                                 <option value="">-- Chọn size áo --</option>
-                             </select>
-                             <div class="invalid-feedback">Vui lòng chọn size áo.</div>
-                         </div>
+                         <div class="row">
+        <div class="col-md-6 mb-3">
+        <label for="sizeType" class="form-label required-field">Kiểu áo</label>
+        <select id="sizeType" name="sizeType" class="form-select" required onchange="updateSizeOptions(); updateTotal()">
+            <option value="">-- Chọn kiểu áo --</option>
+            <option value="Nam" data-price="100000">Áo Nam - 100.000đ</option>
+            <option value="Nữ" data-price="100000">Áo Nữ - 100.000đ</option>
+            <option value="Trẻ em" data-price="80000">Áo Trẻ em - 80.000đ</option>
+        </select>
+        <div class="invalid-feedback">Vui lòng chọn kiểu áo.</div>
+    </div>
+    <div class="col-md-6 mb-3">
+        <label for="size" class="form-label required-field">Size áo</label>
+        <select id="size" name="size" class="form-select" required disabled>
+            <option value="">-- Chọn size áo --</option>
+        </select>
+        <div class="invalid-feedback">Vui lòng chọn size áo.</div>
+    </div>
+</div>
                          <div class="col-md-6 mb-3">
                              <label for="total" class="form-label">Tổng tiền thanh toán</label>
                              <div class="input-group">
@@ -352,51 +352,48 @@
      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
      <script>
          function updateTotal() {
-             const culySelect = document.getElementById("culy");
-             const sizeTypeSelect = document.getElementById("sizeType");
-             const totalInput = document.getElementById("total");
-             const culyPrice = culySelect.value ? parseInt(culySelect.options[culySelect.selectedIndex].getAttribute("data-price")) : 0;
-             const sizeTypePrice = sizeTypeSelect.value ? parseInt(sizeTypeSelect.options[sizeTypeSelect.selectedIndex].getAttribute("data-price")) : 0;
-             const total = culyPrice + sizeTypePrice;
-             totalInput.value = total.toLocaleString('vi-VN');
-         }
- 
-         function updateSizeOptions() {
-             const sizeTypeSelect = document.getElementById("sizeType");
-             const sizeSelect = document.getElementById("size");
- 
-             // Đặt lại nội dung của dropdown size
-             sizeSelect.innerHTML = '<option value="">-- Chọn size áo --</option>';
- 
-             // Kiểm tra xem sizeTypeSelect có giá trị hay không
-             if (sizeTypeSelect.value) {
-                 // Nếu có giá trị, bỏ thuộc tính disabled
-                 sizeSelect.disabled = false;
- 
-                 // Thêm các options tương ứng với kiểu áo đã chọn
-                 if (sizeTypeSelect.value === "Nam") {
-                     sizeSelect.add(new Option("S", "S"));
-                     sizeSelect.add(new Option("M", "M"));
-                     sizeSelect.add(new Option("L", "L"));
-                     sizeSelect.add(new Option("XL", "XL"));
-                     sizeSelect.add(new Option("XXL", "XXL"));
-                 } else if (sizeTypeSelect.value === "Nữ") {
-                     sizeSelect.add(new Option("XS", "XS"));
-                     sizeSelect.add(new Option("S", "S"));
-                     sizeSelect.add(new Option("M", "M"));
-                     sizeSelect.add(new Option("L", "L"));
-                     sizeSelect.add(new Option("XL", "XL"));
-                 } else if (sizeTypeSelect.value === "Trẻ em") {
-                     sizeSelect.add(new Option("2XS", "2XS"));
-                     sizeSelect.add(new Option("XS", "XS"));
-                     sizeSelect.add(new Option("S", "S"));
-                     sizeSelect.add(new Option("M", "M"));
-                 }
-             } else {
-                 // Nếu không có giá trị, giữ thuộc tính disabled
-                 sizeSelect.disabled = true;
-             }
-         }
+    const culySelect = document.getElementById("culy");
+    const sizeTypeSelect = document.getElementById("sizeType");
+    const totalInput = document.getElementById("total");
+
+    // Lấy giá trị từ dropdown cự ly và kiểu áo
+    const culyPrice = culySelect.value ? parseInt(culySelect.options[culySelect.selectedIndex].getAttribute("data-price")) : 0;
+    const sizeTypePrice = sizeTypeSelect.value ? parseInt(sizeTypeSelect.options[sizeTypeSelect.selectedIndex].getAttribute("data-price")) : 0;
+
+    // Tính tổng tiền
+    const total = culyPrice + sizeTypePrice;
+
+    // Cập nhật giá trị vào ô tổng tiền
+    totalInput.value = total.toLocaleString('vi-VN');
+}
+          function updateSizeOptions() {
+    const sizeTypeSelect = document.getElementById("sizeType");
+    const sizeSelect = document.getElementById("size");
+
+    // Reset nội dung của dropdown size áo
+    sizeSelect.innerHTML = '<option value="">-- Chọn size áo --</option>';
+    sizeSelect.disabled = true; // Mặc định vô hiệu hóa dropdown size áo
+
+    // Kiểm tra xem kiểu áo có được chọn hay không
+    if (sizeTypeSelect.value) {
+        sizeSelect.disabled = false; // Kích hoạt dropdown size áo
+
+        // Thêm các tùy chọn size áo dựa trên kiểu áo đã chọn
+        if (sizeTypeSelect.value === "Nam") {
+            ["S", "M", "L", "XL", "XXL"].forEach(size => {
+                sizeSelect.add(new Option(size, size));
+            });
+        } else if (sizeTypeSelect.value === "Nữ") {
+            ["XS", "S", "M", "L", "XL"].forEach(size => {
+                sizeSelect.add(new Option(size, size));
+            });
+        } else if (sizeTypeSelect.value === "Trẻ em") {
+            ["2XS", "XS", "S", "M"].forEach(size => {
+                sizeSelect.add(new Option(size, size));
+            });
+        }
+    }
+}
  
          // Cập nhật xử lý submit form để lưu dữ liệu vào Google Sheets
  document.getElementById('registrationFormElement').addEventListener('submit', function (event) {
