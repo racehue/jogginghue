@@ -355,7 +355,6 @@
             const sizeSelect = document.getElementById("size");
             sizeSelect.innerHTML = '<option value="">-- Chọn size áo --</option>';
             sizeSelect.disabled = true;
-
             if (sizeTypeSelect.value) {
                 sizeSelect.disabled = false;
                 const sizes = {
@@ -368,41 +367,33 @@
                 });
             }
         }
-
         // Hàm tính tổng tiền
         function updateTotal() {
             const culySelect = document.getElementById("culy");
             const sizeTypeSelect = document.getElementById("sizeType");
             const totalInput = document.getElementById("total");
-
             const culyPrice = culySelect.value ? parseInt(culySelect.options[culySelect.selectedIndex].getAttribute("data-price")) : 0;
             const sizeTypePrice = sizeTypeSelect.value ? parseInt(sizeTypeSelect.options[sizeTypeSelect.selectedIndex].getAttribute("data-price")) : 0;
-
             const total = culyPrice + sizeTypePrice;
             totalInput.value = total.toLocaleString('vi-VN');
         }
-
-       // Xử lý submit form - Đoạn code cần sửa
+       // Xử lý submit form
 document.getElementById('registrationFormElement').addEventListener('submit', function (event) {
-    event.preventDefault();
+    event.preventDefault(); // Ngăn chặn hành vi mặc định của form
     const form = event.target;
-
     if (!form.checkValidity()) {
         event.stopPropagation();
-        form.classList.add('was-validated');
+        form.classList.add('was-validated'); // Hiển thị thông báo lỗi validation
         return;
     }
-
     const sizeSelect = document.getElementById("size");
     if (sizeSelect.disabled || !sizeSelect.value) {
         alert("Vui lòng chọn size áo phù hợp.");
         return;
     }
-
     // Ẩn nút submit và hiển thị spinner
     document.getElementById('submitBtn').classList.add('d-none');
     document.getElementById('loadingSpinner').classList.remove('d-none');
-
     // Tạo dữ liệu để gửi
     const formData = {
         codeId: generateOrderCode(),
@@ -413,37 +404,28 @@ document.getElementById('registrationFormElement').addEventListener('submit', fu
         culy: document.getElementById('culy').value,
         sizeType: document.getElementById('sizeType').value,
         size: document.getElementById('size').value,
-        total: document.getElementById('total').value.replace(/\D/g, ''),
+        total: document.getElementById('total').value.replace(/\./g, ''),
         questions: document.getElementById('questions').value,
         registerDate: new Date().toLocaleString('vi-VN')
     };
-
-    // Gửi dữ liệu đến Google Apps Script sử dụng JSONP hoặc truy cập trực tiếp 
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbzY83TgrpImiqSberj9zItwggmByMEX63O2W3KY2pDLt5kzLlD4X3QSWz8UNdVs8Vs1/exec';
-    
-    // Tạo form data để gửi POST request thay vì JSON
-    const urlEncodedData = new URLSearchParams();
-    for (const key in formData) {
-        urlEncodedData.append(key, formData[key]);
-    }
-
-    fetch(scriptURL, {
+    // Gửi dữ liệu đến Google Apps Script
+    fetch('https://script.google.com/macros/s/AKfycbzY83TgrpImiqSberj9zItwggmByMEX63O2W3KY2pDLt5kzLlD4X3QSWz8UNdVs8Vs1/exec', {
         method: 'POST',
-        mode: 'no-cors', // Quan trọng để tránh lỗi CORS
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: urlEncodedData
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
     })
     .then(response => {
-        // Vì sử dụng no-cors, luôn chuyển hướng sau khi gửi
-        // Lưu dữ liệu vào localStorage để lấy ở trang tiếp theo
-        localStorage.setItem('registrationData', JSON.stringify(formData));
-        
-        // Đảm bảo đường dẫn chính xác đến page2.html
-        const currentPath = window.location.pathname;
-        const basePath = currentPath.substring(0, currentPath.lastIndexOf('/') + 1);
-        window.location.href = `${basePath}page2.html`;
+        if (response.ok) {
+            // Tạo query parameters từ formData
+            const queryParams = new URLSearchParams();
+            for (const key in formData) {
+                queryParams.append(key, formData[key]);
+            }
+            // Chuyển hướng đến page2.html với query parameters
+            window.location.href = `page2.html?${queryParams.toString()}`;
+        } else {
+            throw new Error('Lỗi khi gửi dữ liệu.');
+        }
     })
     .catch(error => {
         console.error('Lỗi khi gửi dữ liệu:', error);
@@ -451,16 +433,6 @@ document.getElementById('registrationFormElement').addEventListener('submit', fu
         document.getElementById('loadingSpinner').classList.add('d-none');
         document.getElementById('submitBtn').classList.remove('d-none');
     });
-    
-    // Thêm timeout xử lý để tránh treo trang khi không có response
-    setTimeout(() => {
-        // Nếu sau 10 giây vẫn không có response
-        if (document.getElementById('loadingSpinner').classList.contains('d-none') === false) {
-            document.getElementById('submitErrorMessage').classList.remove('d-none');
-            document.getElementById('loadingSpinner').classList.add('d-none');
-            document.getElementById('submitBtn').classList.remove('d-none');
-        }
-    }, 10000);
 });
         // Hàm tạo mã đơn hàng theo định dạng QCXXXX
         function generateOrderCode() {
@@ -468,7 +440,6 @@ document.getElementById('registrationFormElement').addEventListener('submit', fu
             const paddedNumber = randomNumber.toString().padStart(4, '0');
             return 'QC' + paddedNumber;
         }
-
     </script>
 </body>
 </html>
