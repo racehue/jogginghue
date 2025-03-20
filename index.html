@@ -1,445 +1,527 @@
 <!DOCTYPE html>
-<html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Giải chạy Jogging Quảng Công Biển Gọi</title>
-    <meta name="description" content="Đăng ký tham gia giải chạy Jogging Quảng Công Biển Gọi lần thứ I năm 2025. Nhiều cự ly, áo chạy chất lượng, giải thưởng hấp dẫn.">
-    <meta name="keywords" content="giải chạy, jogging, quảng công, biển gọi, đăng ký, thể thao, 5km, 10km, chạy bộ, từ thiện">
-    <meta name="author" content="Ban Tổ Chức Giải chạy Jogging Quảng Công Biển Gọi">
-    <link rel="icon" href="/favicon.ico" type="image/x-icon">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        body {
-            font-family: 'Roboto', sans-serif;
-            background-color: #f0f4f8;
-            color: #333;
-        }
-        .header-banner {
-            background-image: url('header-bg.jpg');
-            background-size: cover;
-            background-position: center;
-            min-height: 350px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 2rem;
-            border-radius: 0;
-        }
-        .header-banner h1 {
-            font-size: 3.5rem;
-            font-weight: 700;
-            text-shadow: 2px 4px 10px rgba(0, 0, 0, 0.6);
-            letter-spacing: -0.02em;
-        }
-        .header-banner p {
-            font-size: 1.3rem;
-            text-shadow: 1px 2px 5px rgba(0, 0, 0, 0.5);
-            margin-bottom: 2.5rem;
-            font-weight: 500;
-        }
-        .header-banner a {
-            padding: 1rem 2.5rem;
-            font-size: 1.2rem;
-            border-radius: 10px;
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-            transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.3s;
-        }
-        .header-banner a:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.25);
-            background-color: #0056b3 !important;
-        }
-        .header-banner a:active {
-            transform: translateY(0);
-            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
-        }
-        .feature-card {
-            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-            border-radius: 20px;
-            background-color: #fff;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-            padding: 2rem;
-            text-align: center;
-            border: none;
-        }
-        .feature-card:hover {
-            transform: translateY(-15px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
-        }
-        .feature-card i {
-            color: #007bff;
-            margin-bottom: 2rem;
-            transition: transform 0.3s ease;
-            font-size: 3rem;
-        }
-        .feature-card:hover i {
-            transform: scale(1.3);
-        }
-        .feature-card h3 {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 1.2rem;
-            color: #2c3e50;
-        }
-        .feature-card p {
-            font-size: 1.1rem;
-            color: #555;
-            line-height: 1.7;
-        }
-        .form-container {
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-            background-color: #ffffff;
-            padding: 3rem;
-        }
-        .section-heading {
-            font-weight: 700;
-            color: #003366;
-            border-bottom: 4px solid #007bff;
-            padding-bottom: 1rem;
-            margin-bottom: 3rem;
-            font-size: 2.2rem;
-            letter-spacing: -0.02em;
-        }
-        .required-field::after {
-            content: " *";
-            color: red;
-        }
-        .total-value {
-            font-weight: 700;
-            color: #28a745;
-            font-size: 1.4rem;
-        }
-        #submitBtn {
-            transition: transform 0.25s ease-in-out, background-color 0.3s ease, box-shadow 0.25s ease-in-out;
-            font-weight: 600;
-            padding: 1rem 3rem;
-            border-radius: 12px;
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
-            font-size: 1.3rem;
-        }
-        #submitBtn:hover {
-            transform: translateY(-6px);
-            background-color: #004080;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-        }
-        #submitBtn:active {
-            transform: translateY(0);
-            box-shadow: 0 3px 7px rgba(0, 0, 0, 0.1);
-        }
-        .footer {
-            background-color: #00264d;
-            border-top: 4px solid #007bff;
-            padding-top: 3rem;
-            padding-bottom: 3rem;
-        }
-        .footer-contact {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-top: 2rem;
-            font-size: 1.2rem;
-            font-weight: 500;
-            color: #fff;
-        }
-        .footer-contact i {
-            margin-right: 0.75rem;
-        }
-        .footer p {
-            color: #eee;
-        }
-        .footer a {
-            color: #fff;
-            text-decoration: underline;
-            transition: color 0.2s ease;
-        }
-        .footer a:hover {
-            color: #b3d9ff;
-        }
-        @media (max-width: 992px) {
-            .header-banner h1 {
-                font-size: 3rem;
-            }
-            .header-banner p {
-                font-size: 1.2rem;
-            }
-            .feature-card {
-                margin-bottom: 2rem;
-            }
-        }
-        @media (max-width: 768px) {
-            .header-banner {
-                padding: 1.5rem;
-            }
-            .header-banner h1 {
-                font-size: 2.5rem;
-            }
-            .header-banner p {
-                font-size: 1.1rem;
-            }
-            .form-container {
-                padding: 2rem;
-            }
-            .section-heading {
-                font-size: 2rem;
-            }
-        }
-    </style>
-</head>
-<body>
-    <header class="header-banner">
-        <div class="container text-center text-white">
-            <h1 class="display-3 fw-bold">Giải chạy Jogging Quảng Công Biển Gọi</h1>
-            <p class="lead">Đăng ký giải chạy lần thứ I năm 2025</p>
-            <a href="#registrationForm" class="btn btn-primary btn-lg rounded-pill">
-                <i class="fas fa-arrow-down me-2"></i> Đăng ký ngay
-            </a>
-        </div>
-    </header>
-    <section class="container py-5">
-        <h2 class="text-center mb-4 section-heading">Điểm nổi bật của giải chạy</h2>
-        <div class="row">
-            <div class="col-md-4">
-                <div class="card feature-card h-100">
-                    <div class="card-body">
-                        <i class="fas fa-running"></i>
-                        <h3 class="card-title">Cự ly đa dạng</h3>
-                        <p class="card-text">Với các cự ly 5km và 10km phù hợp với mọi độ tuổi và thể lực.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card feature-card h-100">
-                    <div class="card-body">
-                        <i class="fas fa-tshirt"></i>
-                        <h3 class="card-title">Áo chạy chất lượng</h3>
-                        <p class="card-text">Thiết kế độc quyền với nhiều size phù hợp cho người lớn và trẻ em.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card feature-card h-100">
-                    <div class="card-body">
-                        <i class="fas fa-medal"></i>
-                        <h3 class="card-title">Giải thưởng hấp dẫn</h3>
-                        <p class="card-text">Cơ hội nhận những phần thưởng giá trị khi hoàn thành và đạt thành tích cao.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <section class="container py-5" id="registrationForm">
-        <div class="form-container bg-white">
-            <h2 class="text-center mb-4 section-heading">Thông tin đăng ký</h2>
-            <p class="text-center text-muted mb-4">Vui lòng điền đầy đủ thông tin bên dưới để hoàn tất đăng ký tham gia giải chạy.</p>
-            <form id="registrationFormElement" novalidate>
-                <div class="mb-4">
-                    <h4 class="section-heading"><i class="fas fa-user me-2"></i>Thông tin cá nhân</h4>
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label for="sex" class="form-label required-field">Danh xưng</label>
-                            <select id="sex" name="sex" class="form-select" required>
-                                <option value="">-- Chọn danh xưng --</option>
-                                <option value="Anh">Anh</option>
-                                <option value="Chị">Chị</option>
-                                <option value="Em">Em</option>
-                            </select>
-                            <div class="invalid-feedback">Vui lòng chọn danh xưng.</div>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <label for="name" class="form-label required-field">Họ và tên</label>
-                            <input type="text" class="form-control" id="name" name="name" placeholder="Nhập họ và tên đầy đủ" required>
-                            <div class="invalid-feedback">Vui lòng nhập họ và tên.</div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label for="email" class="form-label required-field">Email</label>
-                            <input type="email" class="form-control" id="email" name="email" placeholder="example@domain.com" required>
-                            <div class="invalid-feedback">Vui lòng nhập email hợp lệ.</div>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <label for="tel" class="form-label required-field">Số điện thoại</label>
-                            <input type="tel" class="form-control" id="tel" name="tel" placeholder="0981xxxxxx" required>
-                            <div class="invalid-feedback">Vui lòng nhập số điện thoại hợp lệ.</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="mb-4">
-                    <h4 class="section-heading"><i class="fas fa-clipboard-list me-2"></i>Thông tin đăng ký</h4>
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label for="culy" class="form-label required-field">Cự ly đăng ký</label>
-                            <select id="culy" name="culy" class="form-select" required onchange="updateTotal()">
-                                <option value="">-- Chọn cự ly --</option>
-                                <option value="05km" data-price="80000">05km - 80.000đ</option>
-                                <option value="10km" data-price="120000">10km - 120.000đ</option>
-                            </select>
-                            <div class="invalid-feedback">Vui lòng chọn cự ly.</div>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <label for="sizeType" class="form-label required-field">Kiểu áo</label>
-                            <select id="sizeType" name="sizeType" class="form-select" required onchange="updateSizeOptions(); updateTotal()">
-                                <option value="">-- Chọn kiểu áo --</option>
-                                <option value="Nam" data-price="100000">Áo Nam - 100.000đ</option>
-                                <option value="Nữ" data-price="100000">Áo Nữ - 100.000đ</option>
-                                <option value="Trẻ em" data-price="80000">Áo Trẻ em - 80.000đ</option>
-                            </select>
-                            <div class="invalid-feedback">Vui lòng chọn kiểu áo.</div>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <label for="size" class="form-label required-field">Size áo</label>
-                            <select id="size" name="size" class="form-select" required disabled>
-                                <option value="">-- Chọn size áo --</option>
-                            </select>
-                            <div class="invalid-feedback">Vui lòng chọn size áo.</div>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <label for="total" class="form-label">Tổng tiền thanh toán</label>
-                            <div class="input-group">
-                                <span class="input-group-text bg-white border-0"><i class="fas fa-money-bill-wave text-primary"></i></span>
-                                <input type="text" class="form-control bg-white border-0 total-value" id="total" name="total" value="0" readonly>
-                                <span class="input-group-text bg-white border-0">VNĐ</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="mb-4">
-                    <h4 class="section-heading"><i class="fas fa-question-circle me-2"></i>Câu hỏi/Thắc mắc (nếu có)</h4>
-                    <textarea class="form-control" id="questions" name="questions" rows="3" placeholder="Nhập câu hỏi hoặc thắc mắc của bạn (không bắt buộc)"></textarea>
-                </div>
-                <div class="text-center">
-                    <button type="submit" class="btn btn-primary btn-lg" id="submitBtn">
-                        <i class="fas fa-paper-plane me-2"></i> Đăng ký ngay
-                    </button>
-                    <div id="loadingSpinner" class="spinner-border text-primary d-none" role="status">
-                        <span class="visually-hidden">Đang xử lý...</span>
-                    </div>
-                    <div id="submitSuccessMessage" class="mt-3 text-success d-none">
-                        <i class="fas fa-check-circle me-2"></i> Đăng ký thành công!
-                    </div>
-                    <div id="submitErrorMessage" class="mt-3 text-danger d-none">
-                        <i class="fas fa-exclamation-triangle me-2"></i> Đã có lỗi xảy ra. Vui lòng thử lại sau.
-                    </div>
-                </div>
-            </form>
-        </div>
-    </section>
-    <footer class="footer text-white">
-        <div class="container text-center">
-            <h5>Ban Tổ Chức Giải chạy Jogging Quảng Công Biển Gọi</h5>
-            <p class="mb-2">© 2025 - Bản quyền thuộc về Ban Tổ Chức</p>
-            <div class="footer-contact">
-                <i class="fas fa-phone-alt"></i>
-                <span>Hotline: 0981.030.062 (Anh Võ Đức Khiêm)</span>
-            </div>
-            <p>
-                <a href="https://quangcongbengoi.github.io/" target="_blank" rel="noopener noreferrer">
-                    Website Ban Tổ Chức
-                </a>
-            </p>
-        </div>
-    </footer>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        // Hàm cập nhật size áo dựa trên kiểu áo
-        function updateSizeOptions() {
-            const sizeTypeSelect = document.getElementById("sizeType");
-            const sizeSelect = document.getElementById("size");
-            sizeSelect.innerHTML = '<option value="">-- Chọn size áo --</option>';
-            sizeSelect.disabled = true;
-            if (sizeTypeSelect.value) {
-                sizeSelect.disabled = false;
-                const sizes = {
-                    "Nam": ["S", "M", "L", "XL", "XXL"],
-                    "Nữ": ["XS", "S", "M", "L", "XL"],
-                    "Trẻ em": ["2XS", "XS", "S", "M"]
-                };
-                sizes[sizeTypeSelect.value].forEach(size => {
-                    sizeSelect.add(new Option(size, size));
-                });
-            }
-        }
-        // Hàm tính tổng tiền
-        function updateTotal() {
-            const culySelect = document.getElementById("culy");
-            const sizeTypeSelect = document.getElementById("sizeType");
-            const totalInput = document.getElementById("total");
-            const culyPrice = culySelect.value ? parseInt(culySelect.options[culySelect.selectedIndex].getAttribute("data-price")) : 0;
-            const sizeTypePrice = sizeTypeSelect.value ? parseInt(sizeTypeSelect.options[sizeTypeSelect.selectedIndex].getAttribute("data-price")) : 0;
-            const total = culyPrice + sizeTypePrice;
-            totalInput.value = total.toLocaleString('vi-VN');
-        }
-       // Xử lý submit form
-document.getElementById('registrationFormElement').addEventListener('submit', function (event) {
-    event.preventDefault(); // Ngăn chặn hành vi mặc định của form
-    const form = event.target;
-    if (!form.checkValidity()) {
-        event.stopPropagation();
-        form.classList.add('was-validated'); // Hiển thị thông báo lỗi validation
-        return;
-    }
-    const sizeSelect = document.getElementById("size");
-    if (sizeSelect.disabled || !sizeSelect.value) {
-        alert("Vui lòng chọn size áo phù hợp.");
-        return;
-    }
-    // Ẩn nút submit và hiển thị spinner
-    document.getElementById('submitBtn').classList.add('d-none');
-    document.getElementById('loadingSpinner').classList.remove('d-none');
-    // Tạo dữ liệu để gửi
-    const formData = {
-        codeId: generateOrderCode(),
-        sex: document.getElementById('sex').value,
-        name: document.getElementById('name').value,
-        email: document.getElementById('email').value,
-        tel: document.getElementById('tel').value,
-        culy: document.getElementById('culy').value,
-        sizeType: document.getElementById('sizeType').value,
-        size: document.getElementById('size').value,
-        total: document.getElementById('total').value.replace(/\./g, ''),
-        questions: document.getElementById('questions').value,
-        registerDate: new Date().toLocaleString('vi-VN')
-    };
-    // Gửi dữ liệu đến Google Apps Script
-    fetch('https://script.google.com/macros/s/AKfycbzY83TgrpImiqSberj9zItwggmByMEX63O2W3KY2pDLt5kzLlD4X3QSWz8UNdVs8Vs1/exec', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
-    })
-    .then(response => {
-        if (response.ok) {
-            // Tạo query parameters từ formData
-            const queryParams = new URLSearchParams();
-            for (const key in formData) {
-                queryParams.append(key, formData[key]);
-            }
-            // Chuyển hướng đến page2.html với query parameters
-            window.location.href = `page2.html?${queryParams.toString()}`;
-        } else {
-            throw new Error('Lỗi khi gửi dữ liệu.');
-        }
-    })
-    .catch(error => {
-        console.error('Lỗi khi gửi dữ liệu:', error);
-        document.getElementById('submitErrorMessage').classList.remove('d-none');
-        document.getElementById('loadingSpinner').classList.add('d-none');
-        document.getElementById('submitBtn').classList.remove('d-none');
-    });
-});
-        // Hàm tạo mã đơn hàng theo định dạng QCXXXX
-        function generateOrderCode() {
-            const randomNumber = Math.floor(Math.random() * 9999) + 1;
-            const paddedNumber = randomNumber.toString().padStart(4, '0');
-            return 'QC' + paddedNumber;
-        }
-    </script>
-</body>
-</html>
+ <html lang="vi">
+ <head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Giải chạy Jogging Quảng Công Biển Gọi</title>
+     <meta name="description" content="Đăng ký tham gia giải chạy Jogging Quảng Công Biển Gọi lần thứ I năm 2025. Nhiều cự ly, áo chạy chất lượng, giải thưởng hấp dẫn.">
+     <meta name="keywords" content="giải chạy, jogging, quảng công, biển gọi, đăng ký, thể thao, 5km, 10km, chạy bộ, từ thiện">
+     <meta name="author" content="Ban Tổ Chức Giải chạy Jogging Quảng Công Biển Gọi">
+     <link rel="icon" href="/favicon.ico" type="image/x-icon">
+     <link rel="preconnect" href="https://fonts.googleapis.com">
+     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+     <style>
+         body {
+             font-family: 'Roboto', sans-serif;
+             background-color: #f0f4f8;
+             color: #333;
+         }
+         .header-banner {
+             background-image: url('header-bg.jpg');
+             background-size: cover;
+             background-position: center;
+             min-height: 350px;
+             display: flex;
+             flex-direction: column;
+             justify-content: center;
+             align-items: center;
+             text-align: center;
+             padding: 2rem;
+             border-radius: 0;
+         }
+         .header-banner h1 {
+             font-size: 3.5rem;
+             font-weight: 700;
+             text-shadow: 2px 4px 10px rgba(0, 0, 0, 0.6);
+             letter-spacing: -0.02em;
+         }
+         .header-banner p {
+             font-size: 1.3rem;
+             text-shadow: 1px 2px 5px rgba(0, 0, 0, 0.5);
+             margin-bottom: 2.5rem;
+             font-weight: 500;
+         }
+         .header-banner a {
+             padding: 1rem 2.5rem;
+             font-size: 1.2rem;
+             border-radius: 10px;
+             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+             transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.3s;
+         }
+         .header-banner a:hover {
+             transform: translateY(-4px);
+             box-shadow: 0 8px 18px rgba(0, 0, 0, 0.25);
+             background-color: #0056b3 !important;
+         }
+         .header-banner a:active {
+             transform: translateY(0);
+             box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+         }
+         .feature-card {
+             transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+             border-radius: 20px;
+             background-color: #fff;
+             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+             padding: 2rem;
+             text-align: center;
+             border: none;
+         }
+         .feature-card:hover {
+             transform: translateY(-15px);
+             box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
+         }
+         .feature-card i {
+             color: #007bff;
+             margin-bottom: 2rem;
+             transition: transform 0.3s ease;
+             font-size: 3rem;
+         }
+         .feature-card:hover i {
+             transform: scale(1.3);
+         }
+         .feature-card h3 {
+             font-size: 1.5rem;
+             font-weight: 600;
+             margin-bottom: 1.2rem;
+             color: #2c3e50;
+         }
+         .feature-card p {
+             font-size: 1.1rem;
+             color: #555;
+             line-height: 1.7;
+         }
+         .form-container {
+             border-radius: 20px;
+             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+             background-color: #ffffff;
+             padding: 3rem;
+         }
+         .section-heading {
+             font-weight: 700;
+             color: #003366;
+             border-bottom: 4px solid #007bff;
+             padding-bottom: 1rem;
+             margin-bottom: 3rem;
+             font-size: 2.2rem;
+             letter-spacing: -0.02em;
+         }
+         .required-field::after {
+             content: " *";
+             color: red;
+         }
+         .total-value {
+             font-weight: 700;
+             color: #28a745;
+             font-size: 1.4rem;
+         }
+         #submitBtn {
+             transition: transform 0.25s ease-in-out, background-color 0.3s ease, box-shadow 0.25s ease-in-out;
+             font-weight: 600;
+             padding: 1rem 3rem;
+             border-radius: 12px;
+             box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+             font-size: 1.3rem;
+         }
+         #submitBtn:hover {
+             transform: translateY(-6px);
+             background-color: #004080;
+             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+         }
+         #submitBtn:active {
+             transform: translateY(0);
+             box-shadow: 0 3px 7px rgba(0, 0, 0, 0.1);
+         }
+         .footer {
+             background-color: #00264d;
+             border-top: 4px solid #007bff;
+             padding-top: 3rem;
+             padding-bottom: 3rem;
+         }
+         .footer-contact {
+             display: flex;
+             align-items: center;
+             justify-content: center;
+             margin-top: 2rem;
+             font-size: 1.2rem;
+             font-weight: 500;
+             color: #fff;
+         }
+         .footer-contact i {
+             margin-right: 0.75rem;
+         }
+         .footer p {
+             color: #eee;
+         }
+         .footer a {
+             color: #fff;
+             text-decoration: underline;
+             transition: color 0.2s ease;
+         }
+         .footer a:hover {
+             color: #b3d9ff;
+         }
+         @media (max-width: 992px) {
+             .header-banner h1 {
+                 font-size: 3rem;
+             }
+             .header-banner p {
+                 font-size: 1.2rem;
+             }
+             .feature-card {
+                 margin-bottom: 2rem;
+             }
+         }
+         @media (max-width: 768px) {
+             .header-banner {
+                 padding: 1.5rem;
+             }
+             .header-banner h1 {
+                 font-size: 2.5rem;
+             }
+             .header-banner p {
+                 font-size: 1.1rem;
+             }
+             .form-container {
+                 padding: 2rem;
+             }
+             .section-heading {
+                 font-size: 2rem;
+             }
+         }
+     </style>
+ </head>
+ <body>
+     <header class="header-banner">
+         <div class="container text-center text-white">
+             <h1 class="display-3 fw-bold">Giải chạy Jogging Quảng Công Biển Gọi</h1>
+             <p class="lead">Đăng ký giải chạy lần thứ I năm 2025</p>
+             <a href="#registrationForm" class="btn btn-primary btn-lg rounded-pill">
+                 <i class="fas fa-arrow-down me-2"></i> Đăng ký ngay
+             </a>
+         </div>
+     </header>
+     <section class="container py-5">
+         <h2 class="text-center mb-4 section-heading">Điểm nổi bật của giải chạy</h2>
+         <div class="row">
+             <div class="col-md-4">
+                 <div class="card feature-card h-100">
+                     <div class="card-body">
+                         <i class="fas fa-running"></i>
+                         <h3 class="card-title">Cự ly đa dạng</h3>
+                         <p class="card-text">Với các cự ly 5km và 10km phù hợp với mọi độ tuổi và thể lực.</p>
+                     </div>
+                 </div>
+             </div>
+             <div class="col-md-4">
+                 <div class="card feature-card h-100">
+                     <div class="card-body">
+                         <i class="fas fa-tshirt"></i>
+                         <h3 class="card-title">Áo chạy chất lượng</h3>
+                         <p class="card-text">Thiết kế độc quyền với nhiều size phù hợp cho người lớn và trẻ em.</p>
+                     </div>
+                 </div>
+             </div>
+             <div class="col-md-4">
+                 <div class="card feature-card h-100">
+                     <div class="card-body">
+                         <i class="fas fa-medal"></i>
+                         <h3 class="card-title">Giải thưởng hấp dẫn</h3>
+                         <p class="card-text">Cơ hội nhận những phần thưởng giá trị khi hoàn thành và đạt thành tích cao.</p>
+                     </div>
+                 </div>
+             </div>
+         </div>
+     </section>
+     <section class="container py-5" id="registrationForm">
+         <div class="form-container bg-white">
+             <h2 class="text-center mb-4 section-heading">Thông tin đăng ký</h2>
+             <p class="text-center text-muted mb-4">Vui lòng điền đầy đủ thông tin bên dưới để hoàn tất đăng ký tham gia giải chạy.</p>
+             <form id="registrationFormElement" novalidate>
+                 <div class="mb-4">
+                     <h4 class="section-heading"><i class="fas fa-user me-2"></i>Thông tin cá nhân</h4>
+                     <div class="row">
+                         <div class="col-md-6 mb-3">
+                             <label for="sex" class="form-label required-field">Danh xưng</label>
+                             <select id="sex" name="sex" class="form-select" required>
+                                 <option value="">-- Chọn danh xưng --</option>
+                                 <option value="Anh">Anh</option>
+                                 <option value="Chị">Chị</option>
+                                 <option value="Em">Em</option>
+                             </select>
+                             <div class="invalid-feedback">Vui lòng chọn danh xưng.</div>
+                         </div>
+                         <div class="col-md-6 mb-3">
+                             <label for="name" class="form-label required-field">Họ và tên</label>
+                             <input type="text" class="form-control" id="name" name="name" placeholder="Nhập họ và tên đầy đủ" required>
+                             <div class="invalid-feedback">Vui lòng nhập họ và tên.</div>
+                         </div>
+                     </div>
+                     <div class="row">
+                         <div class="col-md-6 mb-3">
+                             <label for="email" class="form-label required-field">Email</label>
+                             <input type="email" class="form-control" id="email" name="email" placeholder="example@domain.com" required>
+                             <div class="invalid-feedback">Vui lòng nhập email hợp lệ.</div>
+                         </div>
+                         <div class="col-md-6 mb-3">
+                             <label for="tel" class="form-label required-field">Số điện thoại</label>
+                             <input type="tel" class="form-control" id="tel" name="tel" placeholder="0981xxxxxx" required>
+                             <div class="invalid-feedback">Vui lòng nhập số điện thoại hợp lệ.</div>
+                         </div>
+                     </div>
+                 </div>
+                 <div class="mb-4">
+                     <h4 class="section-heading"><i class="fas fa-clipboard-list me-2"></i>Thông tin đăng ký</h4>
+                     <div class="row">
+                         <div class="col-md-6 mb-3">
+                             <label for="culy" class="form-label required-field">Cự ly đăng ký</label>
+                             <select id="culy" name="culy" class="form-select" required onchange="updateTotal()">
+                                 <option value="">-- Chọn cự ly --</option>
+                                 <option value="05km" data-price="80000">05km - 80.000đ</option>
+                                 <option value="10km" data-price="120000">10km - 120.000đ</option>
+                             </select>
+                             <div class="invalid-feedback">Vui lòng chọn cự ly.</div>
+                         </div>
+                         <div class="col-md-6 mb-3">
+                             <label for="sizeType" class="form-label required-field">Kiểu áo</label>
+                             <select id="sizeType" name="sizeType" class="form-select" required onchange="updateSizeOptions(); updateTotal()">
+                                 <option value="">-- Chọn kiểu áo --</option>
+                                 <option value="Nam" data-price="100000">Áo Nam - 100.000đ</option>
+                                 <option value="Nữ" data-price="100000">Áo Nữ - 100.000đ</option>
+                                 <option value="Trẻ em" data-price="80000">Áo Trẻ em - 80.000đ</option>
+                             </select>
+                             <div class="invalid-feedback">Vui lòng chọn kiểu áo.</div>
+                         </div>
+                     </div>
+                     <div class="row">
+                         <div class="col-md-6 mb-3">
+                             <label for="size" class="form-label required-field">Size áo</label>
+                             <select id="size" name="size" class="form-select" required disabled>
+                                 <option value="">-- Chọn size áo --</option>
+                             </select>
+                             <div class="invalid-feedback">Vui lòng chọn size áo.</div>
+                         </div>
+                         <div class="col-md-6 mb-3">
+                             <label for="total" class="form-label">Tổng tiền thanh toán</label>
+                             <div class="input-group">
+                                 <span class="input-group-text bg-white border-0"><i class="fas fa-money-bill-wave text-primary"></i></span>
+                                 <input type="text" class="form-control bg-white border-0 total-value" id="total" name="total" value="0" readonly>
+                                 <span class="input-group-text bg-white border-0">VNĐ</span>
+                             </div>
+                         </div>
+                     </div>
+                 </div>
+                 <div class="mb-4">
+                     <h4 class="section-heading"><i class="fas fa-question-circle me-2"></i>Câu hỏi/Thắc mắc (nếu có)</h4>
+                     <textarea class="form-control" id="questions" name="questions" rows="3" placeholder="Nhập câu hỏi hoặc thắc mắc của bạn (không bắt buộc)"></textarea>
+                 </div>
+                 <div class="text-center">
+                     <button type="submit" class="btn btn-primary btn-lg" id="submitBtn">
+                         <i class="fas fa-paper-plane me-2"></i> Đăng ký ngay
+                     </button>
+                     <div id="loadingSpinner" class="spinner-border text-primary d-none" role="status">
+                         <span class="visually-hidden">Đang xử lý...</span>
+                     </div>
+                     <div id="submitSuccessMessage" class="mt-3 text-success d-none">
+                         <i class="fas fa-check-circle me-2"></i> Đăng ký thành công!
+                     </div>
+                     <div id="submitErrorMessage" class="mt-3 text-danger d-none">
+                         <i class="fas fa-exclamation-triangle me-2"></i> Đã có lỗi xảy ra. Vui lòng thử lại sau.
+                     </div>
+                 </div>
+             </form>
+         </div>
+     </section>
+     <footer class="footer text-white">
+         <div class="container text-center">
+             <h5>Ban Tổ Chức Giải chạy Jogging Quảng Công Biển Gọi</h5>
+             <p class="mb-2">© 2025 - Bản quyền thuộc về Ban Tổ Chức</p>
+             <div class="footer-contact">
+                 <i class="fas fa-phone-alt"></i>
+                 <span>Hotline: 0981.030.062 (Anh Võ Đức Khiêm)</span>
+             </div>
+             <p>
+                 <a href="https://quangcongbengoi.github.io/" target="_blank" rel="noopener noreferrer">
+                     Website Ban Tổ Chức
+                 </a>
+             </p>
+         </div>
+     </footer>
+     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+     <script>
+         function updateTotal() {
+             const culySelect = document.getElementById("culy");
+             const sizeTypeSelect = document.getElementById("sizeType");
+             const totalInput = document.getElementById("total");
+             const culyPrice = culySelect.value ? parseInt(culySelect.options[culySelect.selectedIndex].getAttribute("data-price")) : 0;
+             const sizeTypePrice = sizeTypeSelect.value ? parseInt(sizeTypeSelect.options[sizeTypeSelect.selectedIndex].getAttribute("data-price")) : 0;
+             const total = culyPrice + sizeTypePrice;
+             totalInput.value = total.toLocaleString('vi-VN');
+         }
+ 
+         function updateSizeOptions() {
+             const sizeTypeSelect = document.getElementById("sizeType");
+             const sizeSelect = document.getElementById("size");
+ 
+             // Đặt lại nội dung của dropdown size
+             sizeSelect.innerHTML = '<option value="">-- Chọn size áo --</option>';
+ 
+             // Kiểm tra xem sizeTypeSelect có giá trị hay không
+             if (sizeTypeSelect.value) {
+                 // Nếu có giá trị, bỏ thuộc tính disabled
+                 sizeSelect.disabled = false;
+ 
+                 // Thêm các options tương ứng với kiểu áo đã chọn
+                 if (sizeTypeSelect.value === "Nam") {
+                     sizeSelect.add(new Option("S", "S"));
+                     sizeSelect.add(new Option("M", "M"));
+                     sizeSelect.add(new Option("L", "L"));
+                     sizeSelect.add(new Option("XL", "XL"));
+                     sizeSelect.add(new Option("XXL", "XXL"));
+                 } else if (sizeTypeSelect.value === "Nữ") {
+                     sizeSelect.add(new Option("XS", "XS"));
+                     sizeSelect.add(new Option("S", "S"));
+                     sizeSelect.add(new Option("M", "M"));
+                     sizeSelect.add(new Option("L", "L"));
+                     sizeSelect.add(new Option("XL", "XL"));
+                 } else if (sizeTypeSelect.value === "Trẻ em") {
+                     sizeSelect.add(new Option("2XS", "2XS"));
+                     sizeSelect.add(new Option("XS", "XS"));
+                     sizeSelect.add(new Option("S", "S"));
+                     sizeSelect.add(new Option("M", "M"));
+                 }
+             } else {
+                 // Nếu không có giá trị, giữ thuộc tính disabled
+                 sizeSelect.disabled = true;
+             }
+         }
+ 
+         // Cập nhật xử lý submit form để lưu dữ liệu vào Google Sheets
+         document.getElementById('registrationFormElement').addEventListener('submit', function (event) {
+             event.preventDefault();
+             
+             // Form validation
+             const form = event.target;
+             if (!form.checkValidity()) {
+                 event.stopPropagation();
+                 form.classList.add('was-validated');
+                 return;
+             }
+             
+             // Show loading spinner
+             document.getElementById('submitBtn').classList.add('d-none');
+             document.getElementById('loadingSpinner').classList.remove('d-none');
+             
+             // Thu thập dữ liệu từ form
+             const formData = {
+                 codeId: Math.random().toString(36).substr(2, 8), // Tạo mã đơn hàng ngẫu nhiên
+                 sex: document.getElementById('sex').value,
+                 name: document.getElementById('name').value,
+                 email: document.getElementById('email').value,
+                 tel: document.getElementById('tel').value,
+                 culy: document.getElementById('culy').value,
+                 sizeType: document.getElementById('sizeType').value,
+                 size: document.getElementById('size').value,
+                 total: document.getElementById('total').value.replace(/\./g, ''), // Loại bỏ dấu chấm
+                 questions: document.getElementById('questions').value,
+                 registerDate: new Date().toLocaleString('vi-VN') // Thêm ngày đăng ký
+             };
+             
+             // Gửi dữ liệu đến Google Sheets qua Google Apps Script
+             const scriptURL = 'https://script.google.com/macros/s/AKfycbzY83TgrpImiqSberj9zItwggmByMEX63O2W3KY2pDLt5kzLlD4X3QSWz8UNdVs8Vs1/exec'; // Thay thế bằng URL của Google Apps Script
+             
+             fetch(scriptURL, {
+                 method: 'POST',
+                 mode: 'no-cors', // Quan trọng để tránh lỗi CORS
+                 headers: {
+                     'Content-Type': 'application/json'
+                 },
+                 body: JSON.stringify(formData)
+             })
+             .then(response => {
+                 console.log('Đã gửi dữ liệu thành công!');
+                 
+                 // Tạo query parameters từ formData để chuyển sang trang xác nhận
+                 const queryParams = new URLSearchParams();
+                 for (const key in formData) {
+                     queryParams.append(key, formData[key]);
+                 }
+                 
+                 // Chuyển hướng đến page2.html với query parameters
+                 window.location.href = `page2.html?${queryParams.toString()}`;
+             })
+             .catch(error => {
+                 console.error('Lỗi khi gửi dữ liệu:', error);
+                 document.getElementById('submitErrorMessage').classList.remove('d-none');
+                 document.getElementById('loadingSpinner').classList.add('d-none');
+                 document.getElementById('submitBtn').classList.remove('d-none');
+             });
+         });
+ document.getElementById('registrationFormElement').addEventListener('submit', function (event) {
+     event.preventDefault();
+     
+     // Form validation
+     const form = event.target;
+     if (!form.checkValidity()) {
+         event.stopPropagation();
+         form.classList.add('was-validated');
+         return;
+     }
+     
+     // Show loading spinner
+     document.getElementById('submitBtn').classList.add('d-none');
+     document.getElementById('loadingSpinner').classList.remove('d-none');
+     
+     // Thu thập dữ liệu từ form
+     const formData = {
+         codeId: Math.random().toString(36).substr(2, 8), // Tạo mã đơn hàng ngẫu nhiên
+         sex: document.getElementById('sex').value,
+         name: document.getElementById('name').value,
+         email: document.getElementById('email').value,
+         tel: document.getElementById('tel').value,
+         culy: document.getElementById('culy').value,
+         sizeType: document.getElementById('sizeType').value,
+         size: document.getElementById('size').value,
+         total: document.getElementById('total').value.replace(/\./g, ''), // Loại bỏ dấu chấm
+         questions: document.getElementById('questions').value,
+         registerDate: new Date().toLocaleString('vi-VN') // Thêm ngày đăng ký
+     };
+     
+     // Gửi dữ liệu đến Google Sheets qua Google Apps Script
+     const scriptURL = 'https://script.google.com/macros/s/AKfycbzY83TgrpImiqSberj9zItwggmByMEX63O2W3KY2pDLt5kzLlD4X3QSWz8UNdVs8Vs1/exec'; // URL của Google Apps Script
+     
+     // Chuyển đổi formData thành FormData để gửi POST request
+     const formDataToSend = new FormData();
+     for (const key in formData) {
+         formDataToSend.append(key, formData[key]);
+     }
+     
+     fetch(scriptURL, {
+         method: 'POST',
+         mode: 'no-cors', // Cần thiết để tránh lỗi CORS
+         body: formDataToSend
+     })
+     .then(() => {
+         console.log('Đã gửi dữ liệu thành công!');
+         
+         // Tạo query parameters từ formData để chuyển sang trang xác nhận
+         const queryParams = new URLSearchParams();
+         for (const key in formData) {
+             queryParams.append(key, formData[key]);
+         }
+         
+         // Chuyển hướng đến page2.html với query parameters
+         window.location.href = `page2.html?${queryParams.toString()}`;
+     })
+     .catch(error => {
+         console.error('Lỗi khi gửi dữ liệu:', error);
+         document.getElementById('submitErrorMessage').classList.remove('d-none');
+         document.getElementById('loadingSpinner').classList.add('d-none');
+         document.getElementById('submitBtn').classList.remove('d-none');
+     });
+ });
+     </script>
+ </body>
+ </html>
