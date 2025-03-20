@@ -362,29 +362,41 @@
         }
         
         function updateSizeOptions() {
-            const sizeTypeSelect = document.getElementById("sizeType");
-            const sizeSelect = document.getElementById("size");
-            sizeSelect.innerHTML = '<option value="">-- Chọn size áo --</option>';
-            sizeSelect.disabled = !sizeTypeSelect.value;
-            if (sizeTypeSelect.value === "Nam") {
-                sizeSelect.add(new Option("S", "S"));
-                sizeSelect.add(new Option("M", "M"));
-                sizeSelect.add(new Option("L", "L"));
-                sizeSelect.add(new Option("XL", "XL"));
-                sizeSelect.add(new Option("XXL", "XXL"));
-            } else if (sizeTypeSelect.value === "Nữ") {
-                sizeSelect.add(new Option("XS", "XS"));
-                sizeSelect.add(new Option("S", "S"));
-                sizeSelect.add(new Option("M", "M"));
-                sizeSelect.add(new Option("L", "L"));
-                sizeSelect.add(new Option("XL", "XL"));
-            } else if (sizeTypeSelect.value === "Trẻ em") {
-                sizeSelect.add(new Option("2XS", "2XS"));
-                sizeSelect.add(new Option("XS", "XS"));
-                sizeSelect.add(new Option("S", "S"));
-                sizeSelect.add(new Option("M", "M"));
-            }
+    const sizeTypeSelect = document.getElementById("sizeType");
+    const sizeSelect = document.getElementById("size");
+    
+    // Đặt lại nội dung của dropdown size
+    sizeSelect.innerHTML = '<option value="">-- Chọn size áo --</option>';
+    
+    // Kiểm tra xem sizeTypeSelect có giá trị hay không
+    if (sizeTypeSelect.value) {
+        // Nếu có giá trị, bỏ thuộc tính disabled
+        sizeSelect.disabled = false;
+        
+        // Thêm các options tương ứng với kiểu áo đã chọn
+        if (sizeTypeSelect.value === "Nam") {
+            sizeSelect.add(new Option("S", "S"));
+            sizeSelect.add(new Option("M", "M"));
+            sizeSelect.add(new Option("L", "L"));
+            sizeSelect.add(new Option("XL", "XL"));
+            sizeSelect.add(new Option("XXL", "XXL"));
+        } else if (sizeTypeSelect.value === "Nữ") {
+            sizeSelect.add(new Option("XS", "XS"));
+            sizeSelect.add(new Option("S", "S"));
+            sizeSelect.add(new Option("M", "M"));
+            sizeSelect.add(new Option("L", "L"));
+            sizeSelect.add(new Option("XL", "XL"));
+        } else if (sizeTypeSelect.value === "Trẻ em") {
+            sizeSelect.add(new Option("2XS", "2XS"));
+            sizeSelect.add(new Option("XS", "XS"));
+            sizeSelect.add(new Option("S", "S"));
+            sizeSelect.add(new Option("M", "M"));
         }
+    } else {
+        // Nếu không có giá trị, giữ thuộc tính disabled
+        sizeSelect.disabled = true;
+    }
+}
         
        // Replace the form submission code with this Google Sheets integration
 document.getElementById('registrationFormElement').addEventListener('submit', function (event) {
